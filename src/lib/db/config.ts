@@ -1,8 +1,6 @@
-import { readFile, writeFile } from "fs/promises";
-import { resolve } from "path";
 import type { AppConfig } from "./types";
 
-const CONFIG_PATH = resolve(process.cwd(), "src/data/config.json");
+const CONFIG_KEY = "app-config";
 
 const DEFAULT_CONFIG: AppConfig = {
   llmProvider: process.env.LLM_PROVIDER || "ollama",
@@ -11,18 +9,57 @@ const DEFAULT_CONFIG: AppConfig = {
   llmMaxTokens: Number(process.env.LLM_MAX_TOKENS) || 1024,
 };
 
-export async function getConfig(): Promise<AppConfig> {
-  try {
-    const data = await readFile(CONFIG_PATH, "utf-8");
-    return { ...DEFAULT_CONFIG, ...JSON.parse(data) };
-  } catch {
-    return DEFAULT_CONFIG;
+function isKvConfigured(): boolean {
+  return !!(
+    (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) ||
+    (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
+  );
+}
+
+async function getRedis() {
+  const { Redis } = await import("@upstash/redis");
+
+  // Map Vercel KV env vars to Upstash format if needed
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    // Vercel KV is Upstash under the hood
+    process.env.UPSTASH_REDIS_REST_URL = process.env.KV_REST_API_URL;
+    process.env.UPSTASH_REDIS_REST_TOKEN = process.env.KV_REST_API_TOKEN;
   }
+
+  return Redis.fromEnv();
+}
+
+export async function getConfig(): Promise<AppConfig> {
+  // Try KV first if configured
+  if (isKvConfigured()) {
+    try {
+      const redis = await getRedis();
+      const stored = await redis.get(CONFIG_KEY);
+      if (stored) {
+        return { ...DEFAULT_CONFIG, ...(stored as Partial<AppConfig>) };
+      }
+    } catch (err) {
+      console.warn("[Config] KV read failed, using defaults:", err);
+    }
+  }
+
+  // Fallback to env vars and defaults
+  return DEFAULT_CONFIG;
 }
 
 export async function updateConfig(updates: Partial<AppConfig>): Promise<AppConfig> {
   const current = await getConfig();
   const updated = { ...current, ...updates };
-  await writeFile(CONFIG_PATH, JSON.stringify(updated, null, 2));
+
+  // Try to store in KV if configured
+  if (isKvConfigured()) {
+    try {
+      const redis = await getRedis();
+      await redis.set(CONFIG_KEY, JSON.stringify(updated));
+    } catch (err) {
+      console.warn("[Config] KV write failed:", err);
+    }
+  }
+
   return updated;
 }

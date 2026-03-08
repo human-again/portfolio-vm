@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-import { createLLM } from "@/lib/llm/provider";
+import { createLLMAsync } from "@/lib/llm/provider";
 import { classifyTopic } from "@/lib/utils/topicClassifier";
 import { getSystemPrompt } from "@/lib/prompts/system";
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const topic = classifyTopic(query);
     const systemPrompt = await getSystemPrompt(topic);
 
-    const llm = createLLM();
+    const llm = await createLLMAsync();
     const stream = await llm.stream([
       new SystemMessage(systemPrompt),
       new HumanMessage(query),

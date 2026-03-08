@@ -1,6 +1,6 @@
 {
-  "llmProvider": "ollama",
-  "llmModel": "llama3.2",
+  "llmProvider": "anthropic",
+  "llmModel": "claude-sonnet-4-20250514",
   "llmTemperature": 0.7,
   "llmMaxTokens": 1024,
   "activeResumeId": "ad93d8ee-8393-4049-af64-3d27408fbc08",

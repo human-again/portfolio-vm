@@ -1,16 +1,25 @@
 import { PortfolioOverrideSchema, type PortfolioOverride } from "./types";
 
-// ── Upstash Redis client (lazy-init) ────────────────────────────────────────
+// ── Vercel KV / Upstash Redis client (lazy-init) ──────────────────────────
 
 function isKvConfigured(): boolean {
+  // Support both Vercel KV env vars and Upstash env vars
   return !!(
-    process.env.UPSTASH_REDIS_REST_URL &&
-    process.env.UPSTASH_REDIS_REST_TOKEN
+    (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) ||
+    (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
   );
 }
 
 async function getRedis() {
   const { Redis } = await import("@upstash/redis");
+
+  // Map Vercel KV env vars to Upstash format if needed
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    // Vercel KV is Upstash under the hood
+    process.env.UPSTASH_REDIS_REST_URL = process.env.KV_REST_API_URL;
+    process.env.UPSTASH_REDIS_REST_TOKEN = process.env.KV_REST_API_TOKEN;
+  }
+
   return Redis.fromEnv();
 }
 

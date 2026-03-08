@@ -60,7 +60,9 @@
       "Bash(git push origin main)",
       "Bash(git add src/data/config.json)",
       "Bash(pnpm add -D dotenv)",
-      "Bash(git add package.json pnpm-lock.yaml)"
+      "Bash(git add package.json pnpm-lock.yaml)",
+      "Bash(ls -la \"src/app/admin/\\(dashboard\\)/settings/\")",
+      "Bash(cat \"src/app/admin/\\(dashboard\\)/settings/page.tsx\")"
     ]
   }
 }
