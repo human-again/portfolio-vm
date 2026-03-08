@@ -53,7 +53,9 @@
       "Bash(ls -la \"/Users/varmahaj1/Documents/RESUME/PORTFOLIO-VM/src/app/admin/\\(dashboard\\)/\")",
       "Bash(cat \"/Users/varmahaj1/Documents/RESUME/PORTFOLIO-VM/src/app/admin/\\(dashboard\\)/page.tsx\")",
       "Bash(cat \"/Users/varmahaj1/Documents/RESUME/PORTFOLIO-VM/src/app/admin/\\(dashboard\\)/documents/page.tsx\")",
-      "Bash(git add -A)"
+      "Bash(git add -A)",
+      "Bash(git remote add origin https://github.com/human-again/portfolio-vm.git)",
+      "Bash(git push -u origin main)"
     ]
   }
 }

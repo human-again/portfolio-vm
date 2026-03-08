@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, FileText, Sparkles, Loader2 } from "lucide-react";
+import { Trash2, FileText, Sparkles, Loader2, Check } from "lucide-react";
 import type { DocumentRecord } from "@/lib/db/types";
 
 function formatBytes(bytes: number): string {
@@ -18,6 +18,8 @@ export default function DocumentList({
   onDelete: (id: string) => void;
 }) {
   const [extractingId, setExtractingId] = useState<string | null>(null);
+  const [settingResumeId, setSettingResumeId] = useState<string | null>(null);
+  const [activeResumeId, setActiveResumeId] = useState<string | null>(null);
   const [extractResult, setExtractResult] = useState<{
     success: boolean;
     message: string;
@@ -58,6 +60,26 @@ export default function DocumentList({
     }
   }
 
+  async function handleSetActiveResume(docId: string, filename: string) {
+    setSettingResumeId(docId);
+
+    try {
+      const res = await fetch("/api/admin/resume", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ documentId: docId, filename }),
+      });
+
+      if (res.ok) {
+        setActiveResumeId(docId);
+      }
+    } catch (err) {
+      console.error("Failed to set active resume:", err);
+    } finally {
+      setSettingResumeId(null);
+    }
+  }
+
   if (documents.length === 0) {
     return (
       <p className="text-muted-foreground text-sm py-8 text-center">
@@ -83,6 +105,7 @@ export default function DocumentList({
 
       {documents.map((doc) => {
         const isPdf = doc.filename.toLowerCase().endsWith(".pdf");
+        const isResume = doc.topic === "resume" || /resume|cv/i.test(doc.filename);
 
         return (
           <div
@@ -101,6 +124,28 @@ export default function DocumentList({
               </div>
             </div>
             <div className="flex items-center gap-1">
+              {/* Set as Active Resume button — only for resume PDFs */}
+              {isPdf && isResume && (
+                <button
+                  onClick={() => handleSetActiveResume(doc.id, doc.filename)}
+                  disabled={settingResumeId !== null}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                    activeResumeId === doc.id
+                      ? "bg-green-600 text-white"
+                      : "bg-muted hover:bg-muted/80 text-foreground disabled:opacity-50"
+                  }`}
+                  title="Set this as the resume shown on the portfolio"
+                >
+                  {settingResumeId === doc.id ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : activeResumeId === doc.id ? (
+                    <Check size={14} />
+                  ) : (
+                    <FileText size={14} />
+                  )}
+                  {activeResumeId === doc.id ? "Active Resume" : "Set as Resume"}
+                </button>
+              )}
               {/* Extract to Portfolio button — only for PDFs */}
               {isPdf && (
                 <button
