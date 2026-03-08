@@ -105,7 +105,6 @@ export default function DocumentList({
 
       {documents.map((doc) => {
         const isPdf = doc.filename.toLowerCase().endsWith(".pdf");
-        const isResume = doc.topic === "resume" || /resume|cv/i.test(doc.filename);
 
         return (
           <div
@@ -124,8 +123,8 @@ export default function DocumentList({
               </div>
             </div>
             <div className="flex items-center gap-1">
-              {/* Set as Active Resume button — only for resume PDFs */}
-              {isPdf && isResume && (
+              {/* Set as Active Resume button — for all PDFs */}
+              {isPdf && (
                 <button
                   onClick={() => handleSetActiveResume(doc.id, doc.filename)}
                   disabled={settingResumeId !== null}
