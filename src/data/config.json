@@ -1,0 +1,6 @@
+{
+  "llmProvider": "ollama",
+  "llmModel": "llama3.2",
+  "llmTemperature": 0.7,
+  "llmMaxTokens": 1024
+}

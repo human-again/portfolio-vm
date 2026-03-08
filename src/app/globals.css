@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+  --color-border: #e5e5e5;
+  --color-accent: #f97066;
+  --font-sans: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Subtle pink/salmon viewport border matching reference */
+.viewport-border {
+  box-shadow: inset 0 0 0 3px rgba(249, 112, 102, 0.15);
+  min-height: 100vh;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Prose overrides for AI response markdown */
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.prose code {
+  background: var(--color-muted);
+  padding: 0.15em 0.3em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+.prose pre {
+  background: var(--color-foreground);
+  color: var(--color-background);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: transparent;
+  padding: 0;
 }

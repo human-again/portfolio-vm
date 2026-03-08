@@ -1,0 +1,37 @@
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { portfolio } from "@/data/portfolio";
+
+export default function ProfileHero() {
+  return (
+    <motion.div
+      className="flex flex-col items-center text-center"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <p className="text-lg text-gray-500 font-normal mb-1">
+        {portfolio.profile.tagline}
+      </p>
+      <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight mb-8">
+        {portfolio.profile.headline}
+      </h1>
+      <motion.div
+        className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden relative"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+      >
+        <Image
+          src={portfolio.profile.avatar}
+          alt={portfolio.profile.name}
+          fill
+          className="object-cover"
+          priority
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
