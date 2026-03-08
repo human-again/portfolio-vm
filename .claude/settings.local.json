@@ -57,7 +57,10 @@
       "Bash(git remote add origin https://github.com/human-again/portfolio-vm.git)",
       "Bash(git push -u origin main)",
       "Bash(git commit:*)",
-      "Bash(git push origin main)"
+      "Bash(git push origin main)",
+      "Bash(git add src/data/config.json)",
+      "Bash(pnpm add -D dotenv)",
+      "Bash(git add package.json pnpm-lock.yaml)"
     ]
   }
 }
