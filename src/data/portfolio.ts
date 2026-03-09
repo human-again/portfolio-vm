@@ -16,7 +16,7 @@ export const portfolio = {
     name: "Varun Mahajan",
     tagline: "Varun Mahajan's",
     headline: "AI Portfolio",
-    avatar: "/images/profile.svg",
+    avatar: "/images/vm-profile.png",
     watermarkText: "varun",
   },
 

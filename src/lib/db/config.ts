@@ -49,7 +49,13 @@ export async function getConfig(): Promise<AppConfig> {
 
 export async function updateConfig(updates: Partial<AppConfig>): Promise<AppConfig> {
   const current = await getConfig();
-  const updated = { ...current, ...updates };
+  // Trim string fields to prevent whitespace issues
+  const sanitized: Partial<AppConfig> = {
+    ...updates,
+    ...(updates.llmModel && { llmModel: updates.llmModel.trim() }),
+    ...(updates.llmProvider && { llmProvider: updates.llmProvider.trim() }),
+  };
+  const updated = { ...current, ...sanitized };
 
   // Try to store in KV if configured
   if (isKvConfigured()) {
