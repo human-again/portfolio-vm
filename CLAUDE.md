@@ -107,3 +107,20 @@ JINA_API_KEY=
 - **Animations**: Framer Motion
 - **External packages**: `pdf-parse` and `pdfjs-dist` are marked as server external in `next.config.ts` to avoid Turbopack bundling issues
 - All KV/Blob features silently degrade when env vars are absent — `isKvConfigured()` guard returns null instead of throwing
+
+## Git Configuration
+
+For commits to be accepted by Vercel, configure git with the human-again GitHub account:
+
+```bash
+git config --global user.name "human-again"
+git config --global user.email "jmeter00@gmail.com"
+```
+
+Verify configuration:
+```bash
+git config --global user.name
+git config --global user.email
+```
+
+This ensures commits are authored with the correct GitHub account credentials that have write access to the Vercel project.
