@@ -30,10 +30,10 @@ export async function loadConfigAsync(): Promise<Partial<LLMConfig>> {
 }
 
 function buildConfig(overrides?: Partial<LLMConfig>, kvConfig?: Partial<LLMConfig>): LLMConfig {
-  // Priority: overrides > env vars > KV config > defaults
+  // Priority: overrides > KV config (admin settings) > env vars > defaults
   return {
-    provider: (overrides?.provider || process.env.LLM_PROVIDER || kvConfig?.provider || "ollama") as LLMProviderName,
-    model: overrides?.model || process.env.LLM_MODEL || kvConfig?.model || "llama3.2",
+    provider: (overrides?.provider || kvConfig?.provider || process.env.LLM_PROVIDER || "ollama") as LLMProviderName,
+    model: overrides?.model || kvConfig?.model || process.env.LLM_MODEL || "llama3.2",
     temperature: overrides?.temperature ?? parseFloat(process.env.LLM_TEMPERATURE || String(kvConfig?.temperature ?? 0.7)),
     maxTokens: overrides?.maxTokens ?? parseInt(process.env.LLM_MAX_TOKENS || String(kvConfig?.maxTokens ?? 1024), 10),
   };
