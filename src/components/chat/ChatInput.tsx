@@ -33,7 +33,7 @@ export default function ChatInput({ variant = "home" }: ChatInputProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="How can I help you?"
-          className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-sm"
+          className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none focus-visible:outline-none text-sm"
         />
         <button
           type="submit"

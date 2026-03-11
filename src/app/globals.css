@@ -34,9 +34,11 @@ body {
 }
 
 /* Global focus ring — visible for keyboard users */
-:focus-visible {
-  outline: 2px solid var(--color-foreground);
-  outline-offset: 2px;
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 2px;
+  }
 }
 
 /* Skip navigation link — hidden until focused */
