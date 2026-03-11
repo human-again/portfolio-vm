@@ -13,7 +13,7 @@ export default async function AdminLoginPage({
     <main className="flex flex-col items-center justify-center min-h-screen px-4 bg-muted/30">
       <div className="w-full max-w-sm border border-border rounded-2xl bg-background p-8 shadow-sm">
         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted mb-6">
-          <Lock size={18} className="text-muted-foreground" />
+          <Lock size={18} className="text-muted-foreground" aria-hidden="true" />
         </div>
 
         <h1 className="text-2xl font-bold text-foreground mb-1">Admin Panel</h1>
@@ -22,7 +22,7 @@ export default async function AdminLoginPage({
         </p>
 
         {error && (
-          <p className="text-sm text-red-500 mb-4 px-3 py-2 bg-red-50 rounded-lg">
+          <p role="alert" className="text-sm text-red-500 mb-4 px-3 py-2 bg-red-50 rounded-lg">
             Incorrect password. Please try again.
           </p>
         )}
@@ -55,7 +55,11 @@ export default async function AdminLoginPage({
           }}
           className="space-y-4"
         >
+          <label htmlFor="admin-password" className="sr-only">
+            Password
+          </label>
           <input
+            id="admin-password"
             type="password"
             name="password"
             placeholder="Password"

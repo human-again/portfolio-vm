@@ -54,7 +54,7 @@ export default function SettingsPage() {
   };
 
   if (!config) {
-    return <p className="text-muted-foreground">Loading settings...</p>;
+    return <p role="status" className="text-muted-foreground">Loading settings...</p>;
   }
 
   const suggestions = MODEL_SUGGESTIONS[config.llmProvider] || [];
@@ -65,8 +65,9 @@ export default function SettingsPage() {
 
       <div className="border border-border rounded-xl p-6 max-w-xl space-y-6">
         <div>
-          <label className="block text-sm font-medium mb-2">LLM Provider</label>
+          <label htmlFor="llm-provider" className="block text-sm font-medium mb-2">LLM Provider</label>
           <select
+            id="llm-provider"
             value={config.llmProvider}
             onChange={(e) =>
               setConfig({
@@ -86,8 +87,9 @@ export default function SettingsPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Model</label>
+          <label htmlFor="llm-model" className="block text-sm font-medium mb-2">Model</label>
           <input
+            id="llm-model"
             type="text"
             value={config.llmModel}
             onChange={(e) => setConfig({ ...config, llmModel: e.target.value })}
@@ -102,10 +104,11 @@ export default function SettingsPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">
+          <label htmlFor="llm-temperature" className="block text-sm font-medium mb-2">
             Temperature ({config.llmTemperature})
           </label>
           <input
+            id="llm-temperature"
             type="range"
             min="0"
             max="1"
@@ -119,8 +122,9 @@ export default function SettingsPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Max Tokens</label>
+          <label htmlFor="llm-max-tokens" className="block text-sm font-medium mb-2">Max Tokens</label>
           <input
+            id="llm-max-tokens"
             type="number"
             value={config.llmMaxTokens}
             onChange={(e) =>
@@ -133,18 +137,23 @@ export default function SettingsPage() {
           />
         </div>
 
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
-        >
-          {saving ? (
-            <Loader2 size={16} className="animate-spin" />
-          ) : (
-            <Save size={16} />
-          )}
-          {saving ? "Saving..." : saved ? "Saved!" : "Save Settings"}
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+          >
+            {saving ? (
+              <Loader2 size={16} className="animate-spin" aria-hidden="true" />
+            ) : (
+              <Save size={16} aria-hidden="true" />
+            )}
+            {saving ? "Saving..." : saved ? "Saved!" : "Save Settings"}
+          </button>
+          <span role="status" aria-live="polite" className="text-sm text-green-600">
+            {saved ? "Settings saved successfully." : ""}
+          </span>
+        </div>
       </div>
     </div>
   );

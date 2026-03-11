@@ -2,32 +2,40 @@
 
 import { useState } from "react";
 import { Info, X, Github } from "lucide-react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 export default function InfoButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const dialogRef = useFocusTrap<HTMLDivElement>(isOpen);
 
   return (
     <>
       <button
         onClick={() => setIsOpen(true)}
         className="fixed top-4 right-4 z-50 p-1.5 rounded-full border border-border hover:bg-muted transition-colors"
-        aria-label="Info"
+        aria-label="How this site was made"
       >
-        <Info size={18} className="text-muted-foreground" />
+        <Info size={18} className="text-muted-foreground" aria-hidden="true" />
       </button>
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-background border border-border rounded-2xl shadow-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+          <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="info-dialog-title"
+            className="bg-background border border-border rounded-2xl shadow-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+          >
             {/* Header */}
             <div className="sticky top-0 bg-background border-b border-border flex items-center justify-between p-6">
-              <h2 className="text-2xl font-bold">How This Site Was Made</h2>
+              <h2 id="info-dialog-title" className="text-2xl font-bold">How This Site Was Made</h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 hover:bg-muted rounded-lg transition-colors"
-                aria-label="Close"
+                aria-label="Close dialog"
               >
-                <X size={20} />
+                <X size={20} aria-hidden="true" />
               </button>
             </div>
 
@@ -93,8 +101,9 @@ export default function InfoButton() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground text-background hover:bg-foreground/80 transition-colors font-medium"
               >
-                <Github size={18} />
+                <Github size={18} aria-hidden="true" />
                 View on GitHub
+                <span className="sr-only">(opens in new tab)</span>
               </a>
             </div>
           </div>

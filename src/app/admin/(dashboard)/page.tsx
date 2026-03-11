@@ -11,10 +11,10 @@ export default async function AdminDashboard() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <section aria-label="Portfolio statistics" className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="border border-border rounded-xl p-6">
           <div className="flex items-center gap-3 mb-2">
-            <FileText size={20} className="text-muted-foreground" />
+            <FileText size={20} className="text-muted-foreground" aria-hidden="true" />
             <span className="text-sm text-muted-foreground">Documents</span>
           </div>
           <p className="text-3xl font-bold">{docs.length}</p>
@@ -22,7 +22,7 @@ export default async function AdminDashboard() {
 
         <div className="border border-border rounded-xl p-6">
           <div className="flex items-center gap-3 mb-2">
-            <Database size={20} className="text-muted-foreground" />
+            <Database size={20} className="text-muted-foreground" aria-hidden="true" />
             <span className="text-sm text-muted-foreground">
               Embedded Chunks
             </span>
@@ -32,7 +32,7 @@ export default async function AdminDashboard() {
 
         <div className="border border-border rounded-xl p-6">
           <div className="flex items-center gap-3 mb-2">
-            <Cpu size={20} className="text-muted-foreground" />
+            <Cpu size={20} className="text-muted-foreground" aria-hidden="true" />
             <span className="text-sm text-muted-foreground">
               Active Provider
             </span>
@@ -42,7 +42,7 @@ export default async function AdminDashboard() {
             {config.llmModel}
           </p>
         </div>
-      </div>
+      </section>
 
       <div className="border border-border rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4">Recent Documents</h2>

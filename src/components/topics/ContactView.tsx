@@ -15,14 +15,17 @@ export default function ContactView({ contact }: { contact: ContactData }) {
             href={`mailto:${contact.email}`}
             className="flex items-center gap-3 text-blue-600 hover:text-blue-700 transition-colors"
           >
-            <Mail size={18} className="text-muted-foreground" />
+            <Mail size={18} className="text-muted-foreground" aria-hidden="true" />
             <span>{contact.email}</span>
-            <span className="text-muted-foreground">&rsaquo;</span>
+            <span className="text-muted-foreground" aria-hidden="true">&rsaquo;</span>
           </a>
-          <div className="flex items-center gap-3 text-foreground">
-            <Phone size={18} className="text-muted-foreground" />
+          <a
+            href={`tel:${contact.phone.replace(/\s/g, "")}`}
+            className="flex items-center gap-3 text-foreground hover:text-foreground/80 transition-colors"
+          >
+            <Phone size={18} className="text-muted-foreground" aria-hidden="true" />
             <span>{contact.phone}</span>
-          </div>
+          </a>
         </div>
       </div>
     </div>

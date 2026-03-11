@@ -69,8 +69,9 @@ export default function DocumentUploader({
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4">
-        <label className="text-sm font-medium">Topic:</label>
+        <label htmlFor="doc-topic" className="text-sm font-medium">Topic:</label>
         <select
+          id="doc-topic"
           value={topic}
           onChange={(e) => setTopic(e.target.value as Topic)}
           className="border border-border rounded-lg px-3 py-1.5 text-sm bg-background"
@@ -85,6 +86,7 @@ export default function DocumentUploader({
 
       <div
         {...getRootProps()}
+        aria-label={isDragActive ? "Drop files here" : "Upload document — drag and drop or click to browse"}
         className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${
           isDragActive
             ? "border-foreground/40 bg-muted"
@@ -113,7 +115,7 @@ export default function DocumentUploader({
       </div>
 
       {error && (
-        <p className="text-sm text-red-500">{error}</p>
+        <p role="alert" className="text-sm text-red-500">{error}</p>
       )}
     </div>
   );

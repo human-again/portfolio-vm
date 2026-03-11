@@ -8,6 +8,7 @@ import ContactView from "@/components/topics/ContactView";
 import ResumeView from "@/components/topics/ResumeView";
 import type { Topic } from "@/data/portfolio";
 import type { MergedPortfolioData } from "@/lib/portfolio/merged";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface TopicViewProps {
   topic: Topic;
@@ -32,14 +33,16 @@ function TopicContent({ topic, data }: TopicViewProps) {
 }
 
 export default function TopicView({ topic, data }: TopicViewProps) {
+  const prefersReduced = useReducedMotion();
+
   if (topic === "general") return null;
 
   return (
     <motion.div
       key={topic}
-      initial={{ opacity: 0, y: 20 }}
+      initial={prefersReduced ? {} : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
+      transition={prefersReduced ? { duration: 0 } : { duration: 0.4, ease: "easeOut" }}
     >
       <TopicContent topic={topic} data={data} />
     </motion.div>

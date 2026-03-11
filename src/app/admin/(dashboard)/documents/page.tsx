@@ -49,7 +49,7 @@ export default function DocumentsPage() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Documents</h1>
 
-      <div className="mb-6 px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-sm">
+      <div role="note" className="mb-6 px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-sm">
         <span className="font-medium">RAG not active.</span> Files are stored locally but not embedded — the AI responds from the system prompt instead. See{" "}
         <code className="text-xs bg-amber-100 px-1 rounded">docs/RAG-UPGRADE.md</code> to enable vector search.
       </div>
@@ -64,7 +64,7 @@ export default function DocumentsPage() {
           Uploaded Documents ({documents.length})
         </h2>
         {loading ? (
-          <p className="text-muted-foreground text-sm">Loading...</p>
+          <p role="status" className="text-muted-foreground text-sm">Loading...</p>
         ) : (
           <DocumentList documents={documents} onDelete={handleDelete} />
         )}

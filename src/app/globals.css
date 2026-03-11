@@ -7,6 +7,8 @@
   --color-muted-foreground: #737373;
   --color-border: #e5e5e5;
   --color-accent: #f97066;
+  /* Accessible text color — 5.5:1 on white (WCAG AA) */
+  --color-accent-text: #c0392b;
   --font-sans: var(--font-inter);
 }
 
@@ -31,9 +33,33 @@ body {
   display: none;
 }
 
+/* Global focus ring — visible for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 2px;
+}
+
+/* Skip navigation link — hidden until focused */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-foreground);
+  color: var(--color-background);
+  padding: 8px 16px;
+  z-index: 9999;
+  border-radius: 0 0 8px 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: top 0.1s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 /* Prose overrides for AI response markdown */
 .prose a {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-decoration: underline;
 }
 .prose code {
@@ -52,4 +78,21 @@ body {
 .prose pre code {
   background: transparent;
   padding: 0;
+}
+
+/* Reduced motion — disable all animations for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-bounce,
+  .animate-spin,
+  .animate-pulse {
+    animation: none !important;
+  }
 }

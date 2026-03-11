@@ -1,0 +1,48 @@
+# Varun Mahajan — AI Portfolio
+
+> Lead Experience Engineer with 14+ years in Next.js, React, TypeScript, and Node.js. Based in Ontario, Canada. Open to Staff Engineer, Principal Engineer, or hands-on Engineering Manager roles.
+
+This is an AI-powered interactive portfolio. Visitors can ask the AI questions about Varun's experience, projects, skills, and contact information.
+
+## Key Pages
+
+- [Home](https://varunmahajan.tech): Introduction and quick-access topic cards
+- [AI Chat](https://varunmahajan.tech/chat): Conversational interface — ask anything about Varun's work
+
+## About Varun Mahajan
+
+Varun Mahajan is a Lead Experience Engineer at Publicis Sapient, Toronto. He has led frontend engineering for enterprise clients including UHG Optum and Loblaw Digital, delivering AI-powered tools, eCommerce platforms, and payment SDKs at scale.
+
+**Current Role:** Lead Experience Engineer, Publicis Sapient (June 2018 – Present)
+
+**Key Projects:**
+- Optum Contract Analysis Tool (CAT) — AI-powered PDF contract analysis using OpenAI, Next.js, Python
+- Medicare M3P Payment SDK — Micro-frontend payment SDK for Medicare prescription plans
+- JoeFresh eCommerce Re-platform (Loblaw Digital) — +20% conversion, +10% AOV
+- Loblaw In-Store Fulfillment Tool — Deployed to all Loblaw stores across Canada
+
+**Core Skills:**
+- Frontend: Next.js, React, TypeScript, Redux, GraphQL
+- Backend: Node.js, Express, Spring Boot, MySQL, MongoDB
+- DevOps: Kubernetes, Docker, Azure, GitLab CI/CD, GitHub CI/CD
+- AI: OpenAI, Vector DB, LangChain, Python
+
+**Education:** B.Tech in Electronics and Communication Engineering, UPTU Lucknow
+
+**Availability:** Open to work. Permanent Resident — Canada.
+
+**Contact:** mhjn.varun@gmail.com
+
+## Technology Stack (This Site)
+
+This portfolio is built with:
+- Next.js 16 (App Router)
+- TypeScript, Tailwind CSS v4, Framer Motion
+- LangChain + configurable LLM providers (Groq, OpenAI, Anthropic, Ollama)
+- Upstash Redis for portfolio data persistence
+- Vercel Blob for resume storage
+- WCAG 2.1 AA accessible
+
+## Optional: Full Context
+
+- [Resume PDF](https://varunmahajan.tech/resume/resume.pdf): Downloadable PDF resume

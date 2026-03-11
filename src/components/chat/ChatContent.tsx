@@ -11,6 +11,7 @@ import ChatInput from "@/components/chat/ChatInput";
 import InfoButton from "@/components/chat/InfoButton";
 import { classifyTopic } from "@/lib/utils/topicClassifier";
 import type { MergedPortfolioData } from "@/lib/portfolio/merged";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface Props {
   data: MergedPortfolioData;
@@ -20,19 +21,21 @@ export default function ChatContent({ data }: Props) {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
   const topic = classifyTopic(query);
+  const prefersReduced = useReducedMotion();
 
   return (
-    <main className="flex flex-col min-h-screen px-4 py-4 sm:py-6">
+    <main id="main-content" className="flex flex-col min-h-screen px-4 py-4 sm:py-6">
+      <h1 className="sr-only">{data.profile.name} — AI Portfolio Chat</h1>
       <InfoButton />
 
       {/* Small avatar - clickable back to home */}
       <motion.div
         className="flex justify-center mb-4 sm:mb-6"
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={prefersReduced ? {} : { opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
+        transition={prefersReduced ? { duration: 0 } : { duration: 0.3 }}
       >
-        <Link href="/">
+        <Link href="/" aria-label="Return to home">
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden relative hover:opacity-80 transition-opacity">
             <Image
               src={data.profile.avatar}

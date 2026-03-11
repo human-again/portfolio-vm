@@ -19,14 +19,16 @@ function SkillCategory({ title, skills }: { title: string; skills: string[] }) {
   return (
     <div className="mb-6">
       <div className="flex items-center gap-2 mb-3">
-        <Layers size={16} className="text-muted-foreground" />
+        <Layers size={16} className="text-muted-foreground" aria-hidden="true" />
         <h3 className="text-lg font-semibold text-foreground">{title}</h3>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <ul className="flex flex-wrap gap-2" aria-label={`${title} skills`}>
         {skills.map((skill) => (
-          <SkillBadge key={skill} skill={skill} />
+          <li key={skill}>
+            <SkillBadge skill={skill} />
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

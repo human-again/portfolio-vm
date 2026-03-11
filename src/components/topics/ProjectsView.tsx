@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ProjectData } from "@/lib/portfolio/merged";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 interface Props {
   projects: ProjectData[];
@@ -29,14 +31,15 @@ export default function ProjectsView({ projects }: Props) {
             <button
               key={project.name}
               onClick={() => setSelectedProject(project)}
+              aria-label={`View details for ${project.name}`}
               className="flex-1 min-w-[180px] rounded-2xl bg-gradient-to-b from-white to-muted border border-border p-6 shadow-sm text-left hover:shadow-md hover:border-foreground/20 transition-all cursor-pointer"
             >
               <p className="text-xs text-muted-foreground mb-1">
                 {project.label}
               </p>
-              <h3 className="text-xl font-bold text-foreground">
+              <p className="text-xl font-bold text-foreground">
                 {project.name}
-              </h3>
+              </p>
             </button>
           ))}
       </div>
@@ -45,9 +48,10 @@ export default function ProjectsView({ projects }: Props) {
           <button
             onClick={() => setStartIndex((i) => Math.max(0, i - 1))}
             disabled={!canGoBack}
+            aria-label="Previous projects"
             className="p-1 rounded-full text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={20} aria-hidden="true" />
           </button>
           <button
             onClick={() =>
@@ -56,9 +60,10 @@ export default function ProjectsView({ projects }: Props) {
               )
             }
             disabled={!canGoForward}
+            aria-label="Next projects"
             className="p-1 rounded-full text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={20} aria-hidden="true" />
           </button>
         </div>
       )}
@@ -85,6 +90,10 @@ function ProjectDetailDrawer({
   project: ProjectData;
   onClose: () => void;
 }) {
+  const prefersReduced = useReducedMotion();
+  const titleId = `project-drawer-${project.name.replace(/\s+/g, "-")}`;
+  const drawerRef = useFocusTrap<HTMLDivElement>(true);
+
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -106,19 +115,24 @@ function ProjectDetailDrawer({
       {/* Backdrop */}
       <motion.div
         className="fixed inset-0 bg-black/30 z-40"
-        initial={{ opacity: 0 }}
+        initial={prefersReduced ? {} : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        exit={prefersReduced ? {} : { opacity: 0 }}
         onClick={onClose}
+        aria-hidden="true"
       />
 
       {/* Drawer */}
       <motion.div
+        ref={drawerRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
         className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-background z-50 shadow-xl overflow-y-auto"
-        initial={{ x: "100%" }}
+        initial={prefersReduced ? {} : { x: "100%" }}
         animate={{ x: 0 }}
-        exit={{ x: "100%" }}
-        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+        exit={prefersReduced ? {} : { x: "100%" }}
+        transition={prefersReduced ? { duration: 0 } : { type: "spring", damping: 25, stiffness: 200 }}
       >
         <div className="p-6">
           {/* Header */}
@@ -129,14 +143,14 @@ function ProjectDetailDrawer({
             <button
               onClick={onClose}
               className="p-2 rounded-full hover:bg-muted transition-colors"
-              aria-label="Close"
+              aria-label="Close project details"
             >
-              <X size={18} />
+              <X size={18} aria-hidden="true" />
             </button>
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl font-bold text-foreground mb-1">
+          <h2 id={titleId} className="text-2xl font-bold text-foreground mb-1">
             {project.name}
           </h2>
           {project.period && (

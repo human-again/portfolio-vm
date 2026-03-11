@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Briefcase, Layers, Sparkles, Users, FileText } from "lucide-react";
 import { portfolio } from "@/data/portfolio";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const topics = [
   {
@@ -47,20 +48,29 @@ const item = {
 };
 
 export default function TopicCards() {
+  const prefersReduced = useReducedMotion();
+
+  const containerVariants = prefersReduced
+    ? { hidden: {}, show: {} }
+    : container;
+  const itemVariants = prefersReduced
+    ? { hidden: {}, show: {} }
+    : item;
+
   return (
     <motion.div
       className="flex flex-wrap justify-center gap-3"
-      variants={container}
+      variants={containerVariants}
       initial="hidden"
       animate="show"
     >
       {topics.map((topic) => (
-        <motion.div key={topic.label} variants={item}>
+        <motion.div key={topic.label} variants={itemVariants}>
           <Link
             href={`/chat?query=${encodeURIComponent(topic.query)}`}
             className="flex flex-col items-center gap-2 px-6 py-4 rounded-xl border border-border bg-white hover:bg-muted hover:scale-[1.03] transition-all duration-200 min-w-[100px]"
           >
-            <topic.icon size={20} className="text-muted-foreground" />
+            <topic.icon size={20} className="text-muted-foreground" aria-hidden="true" />
             <span className="text-sm font-medium text-foreground">
               {topic.label}
             </span>

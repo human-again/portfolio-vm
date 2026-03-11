@@ -23,8 +23,12 @@ export default function ChatInput({ variant = "home" }: ChatInputProps) {
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto">
-      <div className="flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2.5 shadow-sm">
+      <div className="flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-foreground/20">
+        <label htmlFor="chat-query" className="sr-only">
+          Ask a question
+        </label>
         <input
+          id="chat-query"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -33,9 +37,10 @@ export default function ChatInput({ variant = "home" }: ChatInputProps) {
         />
         <button
           type="submit"
+          aria-label="Send message"
           className="flex items-center justify-center w-8 h-8 rounded-full bg-foreground text-background hover:bg-foreground/80 transition-colors shrink-0"
         >
-          <Icon size={16} />
+          <Icon size={16} aria-hidden="true" />
         </button>
       </div>
     </form>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface AIResponseProps {
   query: string;
@@ -12,6 +13,7 @@ interface AIResponseProps {
 export default function AIResponse({ query }: AIResponseProps) {
   const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -78,23 +80,32 @@ export default function AIResponse({ query }: AIResponseProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={prefersReduced ? {} : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: 0.2 }}
+      transition={prefersReduced ? { duration: 0 } : { duration: 0.3, delay: 0.2 }}
       className="text-foreground leading-relaxed"
     >
+      {/* Screen reader announcements */}
+      <span className="sr-only" aria-live="polite" aria-atomic="true">
+        {isLoading && !text ? "Loading response…" : !isLoading ? "Response complete." : ""}
+      </span>
+
       {isLoading && !text && (
-        <div className="flex items-center gap-1 py-2">
+        <div className="flex items-center gap-1 py-2" aria-hidden="true">
           <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce [animation-delay:0ms]" />
           <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce [animation-delay:150ms]" />
           <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce [animation-delay:300ms]" />
         </div>
       )}
-      <div className="prose prose-sm max-w-none prose-p:my-2 prose-headings:mb-2 prose-headings:mt-4">
+      <div
+        aria-live="polite"
+        aria-atomic="false"
+        className="prose prose-sm max-w-none prose-p:my-2 prose-headings:mb-2 prose-headings:mt-4"
+      >
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
       </div>
       {isLoading && text && (
-        <span className="inline-block w-1.5 h-4 bg-foreground/60 ml-0.5 animate-pulse" />
+        <span className="inline-block w-1.5 h-4 bg-foreground/60 ml-0.5 animate-pulse" aria-hidden="true" />
       )}
     </motion.div>
   );

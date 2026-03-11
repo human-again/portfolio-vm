@@ -93,6 +93,8 @@ export default function DocumentList({
       {/* Extraction result banner */}
       {extractResult && (
         <div
+          role="status"
+          aria-live="polite"
           className={`rounded-lg px-4 py-3 text-sm ${
             extractResult.success
               ? "bg-green-50 text-green-800 border border-green-200"
@@ -112,7 +114,7 @@ export default function DocumentList({
             className="flex items-center justify-between border border-border rounded-lg px-4 py-3"
           >
             <div className="flex items-center gap-3">
-              <FileText size={18} className="text-muted-foreground" />
+              <FileText size={18} className="text-muted-foreground" aria-hidden="true" />
               <div>
                 <p className="text-sm font-medium">{doc.filename}</p>
                 <p className="text-xs text-muted-foreground">
@@ -163,9 +165,10 @@ export default function DocumentList({
               )}
               <button
                 onClick={() => onDelete(doc.id)}
+                aria-label={`Delete ${doc.filename}`}
                 className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-red-500 transition-colors"
               >
-                <Trash2 size={16} />
+                <Trash2 size={16} aria-hidden="true" />
               </button>
             </div>
           </div>
