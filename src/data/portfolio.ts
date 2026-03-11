@@ -17,7 +17,7 @@ export const portfolio = {
     tagline: "Varun Mahajan's",
     headline: "AI Portfolio",
     avatar: "/images/vm-profile.png",
-    watermarkText: "varun",
+    watermarkText: "Varun",
   },
 
   projects: [
@@ -85,9 +85,9 @@ export const portfolio = {
     heading: "Life Outside Code",
     subtitle: "Based in Ontario, Canada — passionate about technology, continuous learning, and exploring new ideas.",
     photos: [
-      "/images/fun/photo1.svg",
-      "/images/fun/photo2.svg",
-      "/images/fun/photo3.svg",
+      "/images/fun/pic1.jpg",
+      "/images/fun/pic2.jpg",
+      "/images/fun/pic3.jpg",
     ],
   },
 
