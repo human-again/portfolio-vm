@@ -223,7 +223,7 @@ export const portfolio = {
         degree: "Bachelor of Technology in Electronics and Communication Engineering",
         school: "Uttar Pradesh Technical University, Lucknow",
         period: "Completed",
-        notes: "Work Authorization: Permanent Resident — Canada",
+        notes: "Work Authorization: Citizen — Canada",
       },
     ],
 
@@ -232,7 +232,7 @@ export const portfolio = {
 
     // Fun / personal section
     funFacts: [
-      "Based in Ontario, Canada — 15+ years of international work experience (India → Canada, permanent resident).",
+      "Based in Ontario, Canada — 15+ years of international work experience (India → Canada, permanent resident → Citizen).",
       "Built production agentic AI systems using LangGraph with human-in-the-loop gates, guardrails, and full auditability — not just API wrappers.",
       "Led engineering teams of 10–15 engineers across enterprise AI and high-traffic eCommerce platforms.",
       "Designed and shipped two AI-powered systems in parallel: a ServiceNow automation agent (LangGraph + FastAPI) and a contract analysis tool (OpenAI + RAG).",
@@ -255,7 +255,7 @@ export const portfolio = {
     ],
 
     // Availability / open to work status
-    availability: "Open to Staff Engineer, Principal Frontend Engineer, or Engineering Manager roles at product companies. Seeking opportunities to architect and lead AI-integrated systems at scale. Permanent Resident of Canada.",
+    availability: "Open to Staff Engineer, Principal Frontend Engineer, or Engineering Manager roles at product companies. Seeking opportunities to architect and lead AI-integrated systems at scale. Citizen of Canada.",
   },
 };
 
