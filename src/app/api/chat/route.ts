@@ -3,6 +3,7 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { createLLMAsync } from "@/lib/llm/provider";
 import { classifyTopic } from "@/lib/utils/topicClassifier";
 import { getSystemPrompt } from "@/lib/prompts/system";
+import { rateLimit } from "@/lib/utils/rateLimit";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/chat
@@ -18,6 +19,9 @@ import { getSystemPrompt } from "@/lib/prompts/system";
 // ─────────────────────────────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest) {
+  const rateLimitResponse = rateLimit(request);
+  if (rateLimitResponse) return rateLimitResponse;
+
   try {
     const { query } = await request.json();
 
@@ -26,6 +30,13 @@ export async function POST(request: NextRequest) {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
+    }
+
+    if (query.length > 2000) {
+      return new Response(
+        JSON.stringify({ error: "Query exceeds maximum length of 2000 characters" }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
+      );
     }
 
     const topic = classifyTopic(query);

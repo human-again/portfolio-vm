@@ -17,10 +17,10 @@ export default function AIResponse({ query }: AIResponseProps) {
 
   useEffect(() => {
     const controller = new AbortController();
-    setText("");
-    setIsLoading(true);
 
     async function fetchResponse() {
+      setText("");
+      setIsLoading(true);
       try {
         const res = await fetch("/api/chat", {
           method: "POST",

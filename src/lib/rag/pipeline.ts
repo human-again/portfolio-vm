@@ -1,7 +1,6 @@
-import { getVectorStore, getEmbeddings } from "./vectorStore";
+import { getVectorStore } from "./vectorStore";
 import { chunkText } from "./chunker";
 import { parseFile } from "./fileParser";
-import { PineconeStore } from "@langchain/pinecone";
 import { getPineconeIndex } from "./vectorStore";
 import type { Topic } from "@/data/portfolio";
 
@@ -22,7 +21,7 @@ export async function ingestDocument(options: IngestOptions): Promise<number> {
   if (!RAG_ENABLED) {
     // RAG not configured — file is stored locally but not embedded.
     // See docs/RAG-UPGRADE.md to enable vector search.
-    console.log(`[RAG disabled] Parsed ${chunks.length} chunks from ${source} (not embedded)`);
+    console.info(`[RAG disabled] Parsed ${chunks.length} chunks from ${source} (not embedded)`);
     return chunks.length;
   }
 

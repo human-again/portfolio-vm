@@ -42,4 +42,4 @@ next-env.d.ts
 data/uploads/
 
 # Claude Code IDE settings
-.claude/settings.local.json
+.claude/

@@ -110,17 +110,9 @@ JINA_API_KEY=
 
 ## Git Configuration
 
-For commits to be accepted by Vercel, configure git with the human-again GitHub account:
+Configure git with the GitHub account that has write access to your Vercel project:
 
 ```bash
-git config --global user.name "human-again"
-git config --global user.email "jmeter00@gmail.com"
+git config --global user.name "your-github-username"
+git config --global user.email "your-email@example.com"
 ```
-
-Verify configuration:
-```bash
-git config --global user.name
-git config --global user.email
-```
-
-This ensures commits are authored with the correct GitHub account credentials that have write access to the Vercel project.

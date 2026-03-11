@@ -173,7 +173,6 @@ ${TOPIC_FOCUS[topic] ?? TOPIC_FOCUS.general}`;
 export async function buildPromptWithContext(
   topic: Topic,
   ragContext: string,
-  _query: string,
 ): Promise<string> {
   const base = await getSystemPrompt(topic);
   if (!ragContext || ragContext === "No additional context available.") {

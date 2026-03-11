@@ -6,6 +6,6 @@ export async function contextFormatter(
   state: ChatGraphStateType
 ): Promise<Partial<ChatGraphStateType>> {
   const context = formatContext(state.documents);
-  const systemPrompt = await buildPromptWithContext(state.topic, context, state.query);
+  const systemPrompt = await buildPromptWithContext(state.topic, context);
   return { context, systemPrompt };
 }
