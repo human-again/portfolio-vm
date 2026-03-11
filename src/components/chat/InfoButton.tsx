@@ -96,7 +96,7 @@ export default function InfoButton() {
             <div className="sticky bottom-0 bg-background border-t border-border p-6 flex items-center justify-between">
               <p className="text-sm text-muted-foreground">Built with passion • Deployed on Vercel</p>
               <a
-                href="https://github.com/varmaah/portfolio-vm"
+                href="https://github.com/human-again/portfolio-vm"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground text-background hover:bg-foreground/80 transition-colors font-medium"
