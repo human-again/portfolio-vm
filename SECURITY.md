@@ -12,7 +12,7 @@ If you discover a security vulnerability in this project, please report it priva
 
 ### Contact
 
-Email: mhjn.varun@gmail.com
+Email: [REDACTED]
 
 Please include:
 - A description of the vulnerability

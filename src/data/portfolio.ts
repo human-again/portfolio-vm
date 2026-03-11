@@ -238,9 +238,21 @@ export const portfolio = {
       "Designed and shipped two AI-powered systems in parallel: a ServiceNow automation agent (LangGraph + FastAPI) and a contract analysis tool (OpenAI + RAG).",
       "Helped drive a 20% uplift in eCommerce conversion at Loblaw Digital through Next.js re-platforming and component architecture.",
       "Built open-source AI systems independently (Invictus protein synthesis agent) demonstrating full-stack AI design from APIs to NLP to frontend.",
+      "Craziest thing: The 'Built Something at 2AM' Story - One weekend I got obsessed with an idea for an AI-powered portfolio site. I started 'just testing something' on a Friday night and before I knew it, it was 3AM and I had a working prototype where people could literally chat with my resume. By Sunday night it had a vector search layer, a chat UI, and a small agent deciding how to answer questions. Most of my projects start like this — curiosity first, sleep later.",
+      "Craziest thing: The 'Side-Project Rabbit Hole' - I once went down a rabbit hole trying to optimize a personal workflow tool. What started as a script to organize files turned into a mini system with agents, state graphs, and automated summaries. Eventually I realized the tooling was more complex than the problem I was trying to solve… but it was a great excuse to learn a bunch of new AI frameworks.",
+      "Craziest thing: The 'Learning Obsession' Story - I once tried to reproduce a research paper implementation just to understand how it worked. It took way longer than expected and half the time I had no idea what I was doing, but by the end I understood the architecture deeply enough to modify it for a small side project. Sometimes the best learning happens when you dive into things slightly over your head.",
+      "Craziest thing: The 'Shipping Fast' Story - I challenged myself to go from idea to working demo in 24 hours. The idea was simple: a chat interface where people could explore my portfolio instead of scrolling through pages. It wasn't perfect, but it forced me to focus on the core experience instead of polishing details. That experiment actually became this site.",
     ],
 
-    hobbies: ["Technology", "Continuous learning", "Problem solving", "Team mentorship", "Exploring Canada"],
+    hobbies: [
+      "Building AI side projects and experiments",
+      "Prototyping weird product ideas",
+      "Exploring AI tooling and agent frameworks",
+      "Deep-diving into technical papers",
+      "Reading about startups, tech, and product design",
+      "Coffee shop coding sessions",
+      "Long walks and hiking to clear my head and think about product ideas",
+    ],
 
     // Availability / open to work status
     availability: "Open to Staff Engineer, Principal Frontend Engineer, or Engineering Manager roles at product companies. Seeking opportunities to architect and lead AI-integrated systems at scale. Permanent Resident of Canada.",

@@ -100,7 +100,7 @@ const TOPIC_FOCUS: Record<Topic, string> = {
   skills:
     "The visitor is asking about skills. Lead with AI/ML expertise (LangChain, LangGraph, agentic AI, guardrails, RAG). Then highlight production-proven full-stack depth (Next.js, React 18, TypeScript, FastAPI, Node.js). Distinguish deep expertise (architected at scale) from familiar tools. Organize by category: AI systems, frontend architecture, backend, DevOps.",
   fun:
-    "The visitor wants to know about the personal side. Be warm and human — a technologist who thinks systematically about complex AI systems and team dynamics. Reference passion for independent AI research (Invictus open-source projects), team mentorship, and continuous learning. Emphasize 15+ years bridging engineering and business impact.",
+    "The visitor wants to know about the personal side, hobbies, or the 'craziest thing' you've done. Be warm, human, and relatable — an engineer who geeks out and builds things just for fun. When asked about crazy things, share ONE of the 'Craziest thing' stories from your fun facts (e.g., the 2AM portfolio prototype, the workflow rabbit hole, or the 24-hour demo). Do not dream up stories not in the context. Mention your hobbies like prototyping, coffee shop coding, and exploring new AI tools.",
   contact:
     "The visitor wants to get in touch. Be direct and welcoming — encourage reaching out for Staff Engineer, Principal Engineer, or Engineering Manager roles at product companies. Emphasize interest in leading AI-integrated systems at scale. Keep it brief.",
   resume:
