@@ -22,47 +22,48 @@ export const portfolio = {
 
   projects: [
     {
+      name: "BOM Requests Enrichment",
+      label: "AI Project",
+      description: "Agentic AI automation platform using LangGraph + human-in-the-loop gates to process ServiceNow tickets end-to-end",
+    },
+    {
+      name: "Invictus (Protein Synthesis)",
+      label: "Open Source",
+      description: "Full-stack AI agent that searches UniProt, retrieves publications, and extracts protein synthesis protocols using LLMs",
+    },
+    {
       name: "Optum Contract Analysis Tool",
       label: "AI Project",
-      description: "AI-powered tool to extract and analyze contract PDFs using OpenAI",
+      description: "Production AI platform using OpenAI + RAG to extract and analyze contract PDFs — 40% reduction in SME analysis time",
     },
     {
       name: "Medicare M3P Payment SDK",
       label: "Project",
-      description: "Micro-frontend payment SDK for Medicare prescription payment plans",
-    },
-    {
-      name: "Optum Pharmacy Help Desk",
-      label: "Project",
-      description: "Healthpay/Stripe integration for seamless pharmacy payment collection",
+      description: "Micro-frontend payment SDK for Medicare prescription payment plans with A/B testing and WCAG 2.1 compliance",
     },
     {
       name: "JoeFresh eCommerce",
       label: "Project",
-      description: "Re-platformed Loblaw Digital's JoeFresh eCommerce site — +20% conversion",
-    },
-    {
-      name: "Loblaw In-Store Tool",
-      label: "Project",
-      description: "Internal NextJS + GraphQL order fulfillment tool for Loblaw store colleagues",
+      description: "Re-platformed Loblaw Digital's JoeFresh site to Next.js — +20% conversion, +10% AOV, +15% time on site",
     },
   ],
 
   skills: {
     frontend: [
-      "Next.js", "React", "Redux", "Angular", "TypeScript", "JavaScript",
-      "HTML5", "CSS3", "SASS/LESS", "Bootstrap", "GraphQL (Apollo)",
+      "Next.js", "React 18", "Redux", "TypeScript", "JavaScript",
+      "HTML5", "CSS3", "GraphQL (Apollo)", "Web Components", "Tailwind CSS",
     ],
     backend: [
-      "Node.js", "Express", "GraphQL", "Spring Boot", "Java",
-      "MySQL", "MongoDB", "Redis", "Firebase",
+      "Node.js", "Express", "GraphQL", "Spring Boot", "FastAPI", "Python",
+      "MongoDB", "PostgreSQL", "Redis", "Firebase",
     ],
     devops: [
-      "Kubernetes", "Docker", "Azure", "GitLab CI/CD", "GitHub CI/CD",
-      "Jenkins", "Jfrog Artifactory", "K6 Load Testing",
+      "Kubernetes", "Docker", "Azure", "GitHub CI/CD", "GitLab CI/CD",
+      "Jfrog Artifactory", "K6 Load Testing", "Vercel",
     ],
     ai: [
-      "OpenAI", "Vector DB", "Python", "AppDynamics", "Prometheus",
+      "LangChain", "LangGraph", "OpenAI", "Anthropic", "Vector Databases",
+      "RAG pipelines", "Prompt Engineering", "Agentic AI", "Guardrails",
     ],
   },
 
@@ -73,11 +74,11 @@ export const portfolio = {
 
   resume: {
     fullName: "Varun Mahajan",
-    description: "14+ years of UI/Web development experience. Lead Experience Engineer at Publicis Sapient, Toronto.",
-    filename: "Varun_Mahajan_May25.pdf",
+    description: "15+ years building high-impact web platforms with AI integration. Lead Engineer at Publicis Sapient, specializing in agentic AI systems and frontend architecture at scale.",
+    filename: "Varun_Mahajan_Resume_2026.pdf",
     url: "/resume/resume.pdf",
-    updatedAt: "May 2025",
-    fileSize: "0.18 MB",
+    updatedAt: "March 2026",
+    fileSize: "0.22 MB",
   },
 
   fun: {
@@ -103,17 +104,17 @@ export const portfolio = {
   // This is what the AI uses to answer questions accurately.
   content: {
     // 1–3 sentence professional summary
-    bio: "Varun Mahajan is a Lead Experience Engineer with 14+ years of UI/Web development experience, specialising in high-performance web applications using React, Next.js, Node.js, and TypeScript. Based in Ontario, Canada, he has led large-scale frontend projects for global clients including UHG Optum and Loblaw Digital at Publicis Sapient. He also has hands-on experience with AI integrations using OpenAI and vector databases, cloud infrastructure (Azure, Kubernetes, Docker), and CI/CD pipelines.",
+    bio: "Varun Mahajan is a Lead Engineer specializing in agentic AI systems and full-stack architecture, with 15+ years building high-impact platforms for Fortune 500 clients. At Publicis Sapient, he leads production AI initiatives including LangGraph-powered agent orchestration, RAG-based document analysis, and large-scale frontend re-platforming. Based in Ontario, Canada, he combines deep frontend expertise (React, Next.js, TypeScript) with modern AI tooling (LangChain, LangGraph, OpenAI) and enterprise architecture (Kubernetes, Azure, GraphQL).",
 
     // List all work experience, newest first
     experience: [
       {
-        role: "Lead Experience Engineer",
+        role: "Lead Engineer — AI & Frontend",
         company: "Publicis Sapient",
         period: "June 2018 – Present",
         description:
-          "Leading frontend engineering for major clients including UHG Optum and Loblaw Digital. Responsibilities span architecture design, team leadership (up to 10 engineers), performance optimisation, release planning, stakeholder management, and hands-on development of reusable React/Next.js component libraries. Key deliverables include AI-powered contract analysis tools, Medicare payment SDKs, pharmacy help desk systems, and large-scale eCommerce re-platforms.",
-        technologies: ["Next.js", "React", "TypeScript", "Node.js", "Redux", "GraphQL", "Kubernetes", "Docker", "Azure", "OpenAI"],
+          "Leading full-stack development and AI delivery for Fortune 500 healthcare and retail clients (UHG Optum, Loblaw Digital). Architecting production agentic AI systems using LangGraph with human-in-the-loop gates, multi-stage verification pipelines, and full auditability. Managing teams of 10–15 engineers; designing system architecture, performance optimization, and WCAG compliance. Key deliverables: BOM Requests Enrichment (LangGraph + FastAPI + guardrails), Contract Analysis Tool (OpenAI + RAG), Medicare Payment SDK (micro-frontends, +15% conversion), JoeFresh eCommerce re-platform (+20% conversion).",
+        technologies: ["Next.js", "React 18", "TypeScript", "Node.js", "FastAPI", "LangChain", "LangGraph", "GraphQL", "Kubernetes", "Docker", "Azure", "OpenAI", "PostgreSQL + pgvector"],
       },
       {
         role: "Senior Associate Experience Technology",
@@ -152,11 +153,25 @@ export const portfolio = {
     // Projects (can mirror the UI projects section with more detail)
     projectDetails: [
       {
+        name: "Optum – BOM Requests Enrichment (Agentic AI Automation)",
+        description:
+          "A full-stack agentic automation platform using LangGraph that ingests ServiceNow BOM (Bill of Materials) tickets and autonomously generates standardized coding specification documents. The system uses a stateful agent graph with distinct nodes for intent detection, task planning, guarded execution (add/update/delete), spec generation, and feedback capture. Includes governance guardrails to prevent destructive actions and PHI exposure, plus a BOM Portal for operational visibility, decision tracing, and feedback-driven optimization. This demonstrates production-grade agentic AI with proper state management, human-in-the-loop gates, and enterprise-ready auditability.",
+        technologies: ["FastAPI", "LangChain", "LangGraph", "Python", "MongoDB", "Azure ADLS", "ServiceNow API", "Next.js", "React", "GraphQL"],
+        outcome: "Eliminates manual BOM analysis effort for engineering teams; production deployment in progress (2025–present).",
+      },
+      {
+        name: "Invictus – AI Protein Synthesis Protocol Extractor (Open Source)",
+        description:
+          "A full-stack open-source AI agent (github.com/human-again/invictus-prototype) that autonomously searches UniProt protein databases, retrieves scientific publications via Perplexity/PubMed/Semantic Scholar APIs, extracts protein synthesis protocols using local LLMs (Ollama), and performs biomedical entity extraction with scispaCy. Includes a verification dashboard with accuracy metrics against a reference dataset. Built as a research tool demonstrating end-to-end AI integration: multi-source API orchestration, LLM inference, NLP pipelines, and full-stack UI.",
+        technologies: ["FastAPI", "Node.js", "Next.js", "React", "TypeScript", "Ollama (local LLMs)", "scispaCy", "Vercel (deployment)"],
+        outcome: "Open-source project with live demo at invictus-prototype.vercel.app; showcases independent AI system design (2024–present).",
+      },
+      {
         name: "Optum – Contract Analysis Tool (CAT)",
         description:
-          "AI-powered application for UHG Optum that extracts and analyses relevant information from contract PDFs using OpenAI. SMEs use the tool to review, compare, and improve future contracts. Varun led the project as the lead frontend engineer, handling architecture design, reusable React component development, performance testing, and release planning.",
-        technologies: ["Next.js", "Node.js", "TypeScript", "OpenAI", "Python", "GraphQL", "Azure App Service", "MongoDB", "Vector DB"],
-        outcome: "Production tool in active use at UHG Optum (2025–present).",
+          "Production AI platform for UHG Optum that extracts and analyzes contract PDF data using OpenAI + RAG + vector databases. SMEs use the tool to review, compare, and improve future contracts with 40% reduction in analysis time. Built with Next.js frontend, GraphQL API layer, and SSE-based streaming for real-time chat interface. Varun led full architecture design, component development, performance optimization, and release planning.",
+        technologies: ["Next.js", "Node.js", "TypeScript", "OpenAI", "Python", "GraphQL", "pgvector", "Azure App Service", "MongoDB"],
+        outcome: "40% reduction in contract analysis time; production deployment at UHG Optum (2025–present).",
       },
       {
         name: "Optum – Medicare Prescription Payment Plan (M3P)",
@@ -217,17 +232,18 @@ export const portfolio = {
 
     // Fun / personal section
     funFacts: [
-      "Based in Ontario, Canada with 14+ years of international work experience (India → Canada).",
-      "Led engineering teams of up to 10 developers across complex, high-traffic eCommerce platforms.",
-      "Delivered AI-powered contract analysis tools using OpenAI — bridging enterprise software and modern AI.",
-      "Helped drive a 20% uplift in eCommerce conversion at Loblaw Digital through frontend re-platforming.",
-      "Permanent Resident of Canada, originally from India.",
+      "Based in Ontario, Canada — 15+ years of international work experience (India → Canada, permanent resident).",
+      "Built production agentic AI systems using LangGraph with human-in-the-loop gates, guardrails, and full auditability — not just API wrappers.",
+      "Led engineering teams of 10–15 engineers across enterprise AI and high-traffic eCommerce platforms.",
+      "Designed and shipped two AI-powered systems in parallel: a ServiceNow automation agent (LangGraph + FastAPI) and a contract analysis tool (OpenAI + RAG).",
+      "Helped drive a 20% uplift in eCommerce conversion at Loblaw Digital through Next.js re-platforming and component architecture.",
+      "Built open-source AI systems independently (Invictus protein synthesis agent) demonstrating full-stack AI design from APIs to NLP to frontend.",
     ],
 
     hobbies: ["Technology", "Continuous learning", "Problem solving", "Team mentorship", "Exploring Canada"],
 
     // Availability / open to work status
-    availability: "Open to Staff Engineer, Principal Engineer, or hands-on Engineering Manager roles in Canada. Permanent Resident.",
+    availability: "Open to Staff Engineer, Principal Frontend Engineer, or Engineering Manager roles at product companies. Seeking opportunities to architect and lead AI-integrated systems at scale. Permanent Resident of Canada.",
   },
 };
 
