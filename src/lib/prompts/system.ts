@@ -87,6 +87,7 @@ export function buildPortfolioContext(data: MergedPortfolioData): string {
   lines.push("## Contact");
   lines.push(`Email: ${data.contact.email}`);
   if (data.contact.phone) lines.push(`Phone: ${data.contact.phone}`);
+  lines.push(`Resume/CV download URL: ${data.resume.url}`);
 
   return lines.join("\n");
 }

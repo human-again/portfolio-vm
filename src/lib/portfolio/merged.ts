@@ -1,5 +1,6 @@
 import { portfolio } from "@/data/portfolio";
 import { getPortfolioOverride, getResumeBlobUrl } from "./kv";
+import { getConfig } from "@/lib/db/config";
 import type { PortfolioOverride } from "./types";
 
 // ── Merged portfolio data type ──────────────────────────────────────────────
@@ -79,13 +80,21 @@ export interface MergedPortfolioData {
  * This is the single source of truth for all UI components and the system prompt.
  */
 export async function getPortfolioData(): Promise<MergedPortfolioData> {
-  const override = await getPortfolioOverride();
-  const blobUrl = await getResumeBlobUrl();
+  const [override, blobUrl, config] = await Promise.all([
+    getPortfolioOverride(),
+    getResumeBlobUrl(),
+    getConfig(),
+  ]);
+
+  // If an active resume is uploaded (no blob), use the download API endpoint
+  const activeResumeUrl =
+    blobUrl ??
+    (config.activeResumeId ? "/api/resume/download" : null);
 
   if (override) {
-    return buildFromOverride(override, blobUrl);
+    return buildFromOverride(override, activeResumeUrl);
   }
-  return buildFromStatic(blobUrl);
+  return buildFromStatic(activeResumeUrl);
 }
 
 // ── Internal builders ───────────────────────────────────────────────────────
