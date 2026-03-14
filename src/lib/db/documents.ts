@@ -2,11 +2,40 @@ import { readFile, writeFile } from "fs/promises";
 import { resolve } from "path";
 import type { DocumentRecord } from "./types";
 
-const DB_PATH = resolve(process.cwd(), "src/data/documents.json");
+const DOCUMENTS_KEY = "documents";
+const LOCAL_DB_PATH = resolve(
+  process.env.VERCEL ? "/tmp" : process.cwd(),
+  "src/data/documents.json"
+);
+
+function isKvConfigured(): boolean {
+  return !!(
+    (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) ||
+    (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
+  );
+}
+
+async function getRedis() {
+  const { Redis } = await import("@upstash/redis");
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    process.env.UPSTASH_REDIS_REST_URL = process.env.KV_REST_API_URL;
+    process.env.UPSTASH_REDIS_REST_TOKEN = process.env.KV_REST_API_TOKEN;
+  }
+  return Redis.fromEnv();
+}
 
 async function readDB(): Promise<DocumentRecord[]> {
+  if (isKvConfigured()) {
+    try {
+      const redis = await getRedis();
+      const stored = await redis.get(DOCUMENTS_KEY);
+      if (stored) return stored as DocumentRecord[];
+    } catch (err) {
+      console.warn("[Documents] KV read failed, falling back to local:", err);
+    }
+  }
   try {
-    const data = await readFile(DB_PATH, "utf-8");
+    const data = await readFile(LOCAL_DB_PATH, "utf-8");
     return JSON.parse(data);
   } catch {
     return [];
@@ -14,7 +43,16 @@ async function readDB(): Promise<DocumentRecord[]> {
 }
 
 async function writeDB(docs: DocumentRecord[]): Promise<void> {
-  await writeFile(DB_PATH, JSON.stringify(docs, null, 2));
+  if (isKvConfigured()) {
+    try {
+      const redis = await getRedis();
+      await redis.set(DOCUMENTS_KEY, JSON.stringify(docs));
+      return;
+    } catch (err) {
+      console.warn("[Documents] KV write failed, falling back to local:", err);
+    }
+  }
+  await writeFile(LOCAL_DB_PATH, JSON.stringify(docs, null, 2));
 }
 
 export async function getAllDocuments(): Promise<DocumentRecord[]> {
