@@ -7,7 +7,7 @@ import { resolve } from "path";
 import { v4 as uuidv4 } from "uuid";
 import type { Topic } from "@/data/portfolio";
 
-const UPLOADS_DIR = resolve(process.cwd(), "data/uploads");
+const UPLOADS_DIR = resolve(process.env.VERCEL ? "/tmp" : process.cwd(), "data/uploads");
 
 export async function GET() {
   const session = await auth();

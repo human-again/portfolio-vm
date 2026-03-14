@@ -9,7 +9,7 @@ import {
 } from "@/lib/portfolio/kv";
 import { resolve } from "path";
 
-const UPLOADS_DIR = resolve(process.cwd(), "data/uploads");
+const UPLOADS_DIR = resolve(process.env.VERCEL ? "/tmp" : process.cwd(), "data/uploads");
 
 /**
  * POST /api/admin/extract
