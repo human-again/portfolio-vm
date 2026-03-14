@@ -15,4 +15,7 @@ export interface AppConfig {
   llmModel: string;
   llmTemperature: number;
   llmMaxTokens: number;
+  activeResumeId?: string;
+  activeResumeFilename?: string;
+  activeResumeUpdatedAt?: string;
 }

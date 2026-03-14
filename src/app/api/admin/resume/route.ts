@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { getDocumentById } from "@/lib/db/documents";
-import { readFile, writeFile } from "fs/promises";
-import { resolve } from "path";
+import { updateConfig } from "@/lib/db/config";
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -19,33 +18,21 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Verify document exists
   const doc = await getDocumentById(documentId);
   if (!doc) {
     return Response.json({ error: "Document not found" }, { status: 404 });
   }
 
   try {
-    const configPath = resolve(process.cwd(), "src/data/config.json");
-    const configData = JSON.parse(await readFile(configPath, "utf-8"));
-
-    // Store active resume document ID
-    configData.activeResumeId = documentId;
-    configData.activeResumeFilename = filename;
-    configData.activeResumeUpdatedAt = new Date().toISOString();
-
-    await writeFile(configPath, JSON.stringify(configData, null, 2));
-
-    return Response.json({
-      success: true,
-      documentId,
-      filename,
+    await updateConfig({
+      activeResumeId: documentId,
+      activeResumeFilename: filename,
+      activeResumeUpdatedAt: new Date().toISOString(),
     });
+
+    return Response.json({ success: true, documentId, filename });
   } catch (err) {
     console.error("Failed to set active resume:", err);
-    return Response.json(
-      { error: "Failed to set active resume" },
-      { status: 500 },
-    );
+    return Response.json({ error: "Failed to set active resume" }, { status: 500 });
   }
 }
