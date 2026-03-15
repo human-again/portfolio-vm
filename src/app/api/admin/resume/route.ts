@@ -2,7 +2,6 @@ import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { getDocumentById } from "@/lib/db/documents";
 import { updateConfig } from "@/lib/db/config";
-import { setResumeBlobUrl } from "@/lib/portfolio/kv";
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -30,15 +29,6 @@ export async function POST(request: NextRequest) {
       activeResumeFilename: filename,
       activeResumeUpdatedAt: new Date().toISOString(),
     });
-
-    // Set the document's blob URL as the global resume download URL
-    if (doc.blobUrl) {
-      try {
-        await setResumeBlobUrl(doc.blobUrl);
-      } catch (err) {
-        console.warn("[Resume] Failed to set blob URL in KV:", err);
-      }
-    }
 
     return Response.json({ success: true, documentId, filename });
   } catch (err) {

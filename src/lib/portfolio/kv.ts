@@ -77,26 +77,5 @@ export async function deletePortfolioOverride(): Promise<void> {
 
 // ── Resume blob URL ─────────────────────────────────────────────────────────
 
-/**
- * Get the resume blob URL from KV.
- */
-export async function getResumeBlobUrl(): Promise<string | null> {
-  if (!isKvConfigured()) return null;
-  try {
-    const redis = await getRedis();
-    return await redis.get<string>(BLOB_URL_KEY);
-  } catch {
-    return null;
-  }
-}
+// removed getResumeBlobUrl and setResumeBlobUrl
 
-/**
- * Store the resume blob URL in KV.
- */
-export async function setResumeBlobUrl(url: string): Promise<void> {
-  if (!isKvConfigured()) {
-    throw new Error("Upstash Redis is not configured (missing env vars)");
-  }
-  const redis = await getRedis();
-  await redis.set(BLOB_URL_KEY, url);
-}
