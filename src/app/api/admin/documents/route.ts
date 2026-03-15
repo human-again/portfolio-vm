@@ -48,8 +48,8 @@ export async function POST(request: NextRequest) {
     let blobUrl: string | undefined;
     if (file.type === "application/pdf" && process.env.BLOB_READ_WRITE_TOKEN) {
       try {
-        const { uploadResumeToBlob } = await import("@/lib/portfolio/blob");
-        blobUrl = await uploadResumeToBlob(file.name, buffer);
+        const { uploadPdfToBlob } = await import("@/lib/portfolio/blob");
+        blobUrl = await uploadPdfToBlob(file.name, buffer);
         console.log("[Blob] PDF uploaded:", blobUrl);
       } catch (err) {
         console.warn("[Blob] PDF upload failed (non-fatal):", err);
