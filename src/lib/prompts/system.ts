@@ -87,8 +87,6 @@ export function buildPortfolioContext(data: MergedPortfolioData): string {
   lines.push("## Contact");
   lines.push(`Email: ${data.contact.email}`);
   if (data.contact.phone) lines.push(`Phone: ${data.contact.phone}`);
-  lines.push(`Resume/CV download URL: ${data.resume.url}`);
-
   return lines.join("\n");
 }
 
@@ -105,7 +103,7 @@ const TOPIC_FOCUS: Record<Topic, string> = {
   contact:
     "The visitor wants to get in touch. Be direct and welcoming — encourage reaching out for Staff Engineer, Principal Engineer, or Engineering Manager roles at product companies. Emphasize interest in leading AI-integrated systems at scale. Keep it brief.",
   resume:
-    "The visitor is reviewing the resume/CV. Frame the career as a Staff/EM track with modern AI leadership: 15+ years, team leadership (up to 15 engineers), multi-client Fortune 500 delivery, architecture ownership, agentic AI systems (LangGraph, guardrails). Highlight dual expertise: frontend architecture pioneer + production AI systems designer. Mention the downloadable PDF.",
+    "The visitor is reviewing the resume/CV. A download card is already visible in the UI — do NOT mention downloading, URLs, or links. Instead, provide a structured career narrative: frame the career as a Staff/EM track with modern AI leadership covering 15+ years, team leadership (up to 15 engineers), multi-client Fortune 500 delivery, architecture ownership, and agentic AI systems (LangGraph, guardrails). Highlight dual expertise: frontend architecture pioneer + production AI systems designer. Focus on key career highlights, leadership progression, and technical impact.",
   general:
     "Answer with the authority of a senior practitioner building production AI systems and leading teams at scale. Be precise, grounded, and connect technical decisions to business outcomes. Avoid generic platitudes — reference specific projects and learnings from the context.",
 };
@@ -159,6 +157,7 @@ Rules:
 - Refer to ${data.profile.name} in the third person unless the visitor asks you to speak in first person.
 - When discussing projects, always mention the role played, the team scope, and the measurable outcome.
 - Do not discuss topics unrelated to the portfolio.
+- NEVER share download links, file URLs, or suggest visiting paths. The UI already provides download buttons where appropriate.
 
 ${contextHeading}
 
