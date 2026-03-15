@@ -8,6 +8,8 @@ export interface DocumentRecord {
   uploadedAt: string;
   chunkCount: number;
   fileSize: number;
+  /** Vercel Blob URL if the PDF was uploaded to blob storage */
+  blobUrl?: string;
 }
 
 export interface AppConfig {

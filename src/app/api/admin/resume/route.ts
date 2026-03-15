@@ -2,13 +2,7 @@ import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { getDocumentById } from "@/lib/db/documents";
 import { updateConfig } from "@/lib/db/config";
-import { readFile } from "fs/promises";
-import { resolve } from "path";
-
-const UPLOADS_DIR = resolve(
-  process.env.VERCEL ? "/tmp" : process.cwd(),
-  "data/uploads",
-);
+import { setResumeBlobUrl } from "@/lib/portfolio/kv";
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -37,15 +31,12 @@ export async function POST(request: NextRequest) {
       activeResumeUpdatedAt: new Date().toISOString(),
     });
 
-    // Upload to Vercel Blob so the download card serves this PDF
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
+    // Set the document's blob URL as the global resume download URL
+    if (doc.blobUrl) {
       try {
-        const filePath = resolve(UPLOADS_DIR, `${doc.id}-${doc.filename}`);
-        const buffer = await readFile(filePath);
-        const { uploadResumeToBlob } = await import("@/lib/portfolio/blob");
-        await uploadResumeToBlob(doc.filename, Buffer.from(buffer));
-      } catch (blobErr) {
-        console.warn("[Resume] Blob upload failed (non-fatal):", blobErr);
+        await setResumeBlobUrl(doc.blobUrl);
+      } catch (err) {
+        console.warn("[Resume] Failed to set blob URL in KV:", err);
       }
     }
 

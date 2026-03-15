@@ -44,6 +44,18 @@ export async function POST(request: NextRequest) {
   try {
     const chunkCount = await ingestDocument({ filePath, topic, source });
 
+    // Upload PDFs to Vercel Blob for persistent storage
+    let blobUrl: string | undefined;
+    if (file.type === "application/pdf" && process.env.BLOB_READ_WRITE_TOKEN) {
+      try {
+        const { uploadResumeToBlob } = await import("@/lib/portfolio/blob");
+        blobUrl = await uploadResumeToBlob(file.name, buffer);
+        console.log("[Blob] PDF uploaded:", blobUrl);
+      } catch (err) {
+        console.warn("[Blob] PDF upload failed (non-fatal):", err);
+      }
+    }
+
     await addDocument({
       id,
       filename: file.name,
@@ -52,22 +64,8 @@ export async function POST(request: NextRequest) {
       uploadedAt: new Date().toISOString(),
       chunkCount,
       fileSize: file.size,
+      blobUrl,
     });
-
-    // Upload resume PDFs to Vercel Blob for persistent download
-    let blobUrl: string | undefined;
-    const isResume =
-      topic === "resume" ||
-      /resume|cv/i.test(file.name);
-    if (isResume && file.type === "application/pdf" && process.env.BLOB_READ_WRITE_TOKEN) {
-      try {
-        const { uploadResumeToBlob } = await import("@/lib/portfolio/blob");
-        blobUrl = await uploadResumeToBlob(file.name, buffer);
-        console.log("[Blob] Resume uploaded:", blobUrl);
-      } catch (err) {
-        console.warn("[Blob] Resume upload failed (non-fatal):", err);
-      }
-    }
 
     const ragEnabled = !!process.env.PINECONE_API_KEY && !!process.env.OPENAI_API_KEY;
     return Response.json({ id, chunkCount, ragEnabled, blobUrl });
