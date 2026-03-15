@@ -1,5 +1,6 @@
 import { portfolio } from "@/data/portfolio";
 import { getPortfolioOverride } from "./kv";
+import { getConfig } from "@/lib/db/config";
 import type { PortfolioOverride } from "./types";
 
 // ── Merged portfolio data type ──────────────────────────────────────────────
@@ -79,18 +80,27 @@ export interface MergedPortfolioData {
  * This is the single source of truth for all UI components and the system prompt.
  */
 export async function getPortfolioData(): Promise<MergedPortfolioData> {
-  const override = await getPortfolioOverride();
+  const [override, config] = await Promise.all([
+    getPortfolioOverride(),
+    getConfig(),
+  ]);
+
+  // When an active resume is set, point the download card to the API endpoint.
+  // It reads the document's blobUrl from Redis and redirects to Vercel Blob.
+  // Falls back to static /resume/resume.pdf when no active resume is configured.
+  const activeResumeUrl = config.activeResumeId ? "/api/resume/download" : null;
 
   if (override) {
-    return buildFromOverride(override);
+    return buildFromOverride(override, activeResumeUrl);
   }
-  return buildFromStatic();
+  return buildFromStatic(activeResumeUrl);
 }
 
 // ── Internal builders ───────────────────────────────────────────────────────
 
 function buildFromOverride(
   o: PortfolioOverride,
+  activeResumeUrl: string | null,
 ): MergedPortfolioData {
   return {
     profile: {
@@ -131,7 +141,7 @@ function buildFromOverride(
       fullName: o.resume?.fullName ?? portfolio.resume.fullName,
       description: o.resume?.description ?? portfolio.resume.description,
       filename: o.resume?.filename ?? portfolio.resume.filename,
-      url: o.resume?.url ?? portfolio.resume.url,
+      url: activeResumeUrl ?? o.resume?.url ?? portfolio.resume.url,
       updatedAt: o.resume?.updatedAt ?? portfolio.resume.updatedAt,
       fileSize: o.resume?.fileSize ?? portfolio.resume.fileSize,
     },
@@ -146,7 +156,7 @@ function buildFromOverride(
   };
 }
 
-function buildFromStatic(): MergedPortfolioData {
+function buildFromStatic(activeResumeUrl: string | null): MergedPortfolioData {
   return {
     profile: {
       ...portfolio.profile,
@@ -166,7 +176,7 @@ function buildFromStatic(): MergedPortfolioData {
     contact: portfolio.contact,
     resume: {
       ...portfolio.resume,
-      url: portfolio.resume.url,
+      url: activeResumeUrl ?? portfolio.resume.url,
     },
     fun: portfolio.fun,
     experience: portfolio.content.experience,
