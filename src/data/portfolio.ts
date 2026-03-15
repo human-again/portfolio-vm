@@ -76,7 +76,7 @@ export const portfolio = {
     fullName: "Varun Mahajan",
     description: "15+ years building high-impact web platforms with AI integration. Lead Engineer at Publicis Sapient, specializing in agentic AI systems and frontend architecture at scale.",
     filename: "Varun_Mahajan_Resume_2026.pdf",
-    url: "/resume/resume.pdf",
+    url: "/api/resume/download",
     updatedAt: "March 2026",
     fileSize: "0.22 MB",
   },

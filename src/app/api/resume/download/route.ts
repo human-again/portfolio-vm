@@ -9,7 +9,9 @@ export async function GET() {
   const blobUrl = await getResumeBlobUrl();
 
   if (blobUrl) {
-    return Response.redirect(blobUrl, 302);
+    const url = new URL(blobUrl);
+    url.searchParams.set("download", "1");
+    return Response.redirect(url.toString(), 302);
   }
 
   // Fallback: redirect to the static public PDF

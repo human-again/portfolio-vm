@@ -3,7 +3,7 @@
   "llmModel": "llama3.2",
   "llmTemperature": 0.7,
   "llmMaxTokens": 1024,
-  "activeResumeId": null,
-  "activeResumeFilename": null,
-  "activeResumeUpdatedAt": null
+  "activeResumeId": "1f07b1f8-7998-4028-a58d-05b37029d389",
+  "activeResumeFilename": "resume.pdf",
+  "activeResumeUpdatedAt": "2026-03-14T05:13:59.093Z"
 }

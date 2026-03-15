@@ -1,5 +1,5 @@
 import { portfolio } from "@/data/portfolio";
-import { getPortfolioOverride, getResumeBlobUrl } from "./kv";
+import { getPortfolioOverride } from "./kv";
 import type { PortfolioOverride } from "./types";
 
 // ── Merged portfolio data type ──────────────────────────────────────────────
@@ -79,22 +79,18 @@ export interface MergedPortfolioData {
  * This is the single source of truth for all UI components and the system prompt.
  */
 export async function getPortfolioData(): Promise<MergedPortfolioData> {
-  const [override, blobUrl] = await Promise.all([
-    getPortfolioOverride(),
-    getResumeBlobUrl(),
-  ]);
+  const override = await getPortfolioOverride();
 
   if (override) {
-    return buildFromOverride(override, blobUrl);
+    return buildFromOverride(override);
   }
-  return buildFromStatic(blobUrl);
+  return buildFromStatic();
 }
 
 // ── Internal builders ───────────────────────────────────────────────────────
 
 function buildFromOverride(
   o: PortfolioOverride,
-  blobUrl: string | null,
 ): MergedPortfolioData {
   return {
     profile: {
@@ -135,7 +131,7 @@ function buildFromOverride(
       fullName: o.resume?.fullName ?? portfolio.resume.fullName,
       description: o.resume?.description ?? portfolio.resume.description,
       filename: o.resume?.filename ?? portfolio.resume.filename,
-      url: blobUrl ?? o.resume?.url ?? portfolio.resume.url,
+      url: o.resume?.url ?? portfolio.resume.url,
       updatedAt: o.resume?.updatedAt ?? portfolio.resume.updatedAt,
       fileSize: o.resume?.fileSize ?? portfolio.resume.fileSize,
     },
@@ -150,7 +146,7 @@ function buildFromOverride(
   };
 }
 
-function buildFromStatic(blobUrl: string | null): MergedPortfolioData {
+function buildFromStatic(): MergedPortfolioData {
   return {
     profile: {
       ...portfolio.profile,
@@ -170,7 +166,7 @@ function buildFromStatic(blobUrl: string | null): MergedPortfolioData {
     contact: portfolio.contact,
     resume: {
       ...portfolio.resume,
-      url: blobUrl ?? portfolio.resume.url,
+      url: portfolio.resume.url,
     },
     fun: portfolio.fun,
     experience: portfolio.content.experience,
