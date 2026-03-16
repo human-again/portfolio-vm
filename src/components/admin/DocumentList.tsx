@@ -121,6 +121,16 @@ export default function DocumentList({
                   {doc.topic} · {doc.chunkCount} chunks ·{" "}
                   {formatBytes(doc.fileSize)} ·{" "}
                   {new Date(doc.uploadedAt).toLocaleDateString()}
+                  {isPdf && (
+                    <>
+                      {" · "}
+                      {doc.blobUrl ? (
+                        <span className="text-green-600 font-medium">Blob ✓</span>
+                      ) : (
+                        <span className="text-yellow-600 font-medium">Local only</span>
+                      )}
+                    </>
+                  )}
                 </p>
               </div>
             </div>
