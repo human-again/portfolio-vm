@@ -37,18 +37,26 @@ export async function GET(request: Request) {
           });
         }
 
-        // 2. Fallback to Vercel Blob URL if local file is missing
+        // 2. Proxy from Vercel Blob (private store requires server-side fetch with token)
         if (doc.blobUrl) {
           try {
-            const headResponse = await fetch(doc.blobUrl, { method: "HEAD" });
-            if (headResponse.ok) {
-              const url = new URL(doc.blobUrl);
-              url.searchParams.set("download", "1");
-              return Response.redirect(url.toString(), 302);
+            const headers: HeadersInit = {};
+            if (process.env.BLOB_READ_WRITE_TOKEN) {
+              headers["Authorization"] = `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`;
             }
-            console.warn(`[Resume Download] Blob URL returned ${headResponse.status} for doc ${doc.id}`);
+            const blobResponse = await fetch(doc.blobUrl, { headers });
+            if (blobResponse.ok) {
+              return new Response(blobResponse.body, {
+                headers: {
+                  "Content-Type": "application/pdf",
+                  "Content-Disposition": `attachment; filename="${doc.filename}"`,
+                  "Cache-Control": "no-store",
+                },
+              });
+            }
+            console.warn(`[Resume Download] Blob fetch returned ${blobResponse.status} for doc ${doc.id}`);
           } catch (err) {
-            console.warn("[Resume Download] Failed to verify blob URL", err);
+            console.warn("[Resume Download] Failed to fetch blob", err);
           }
         } else {
           console.warn(

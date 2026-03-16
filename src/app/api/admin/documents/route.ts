@@ -45,14 +45,25 @@ export async function POST(request: NextRequest) {
     const chunkCount = await ingestDocument({ filePath, topic, source });
 
     // Upload PDFs to Vercel Blob for persistent storage
+    const isPdf =
+      file.type === "application/pdf" ||
+      file.name.toLowerCase().endsWith(".pdf");
     let blobUrl: string | undefined;
-    if (file.type === "application/pdf" && process.env.BLOB_READ_WRITE_TOKEN) {
-      try {
-        const { uploadPdfToBlob } = await import("@/lib/portfolio/blob");
-        blobUrl = await uploadPdfToBlob(file.name, buffer);
-        console.log("[Blob] PDF uploaded:", blobUrl);
-      } catch (err) {
-        console.warn("[Blob] PDF upload failed (non-fatal):", err);
+    let blobError: string | undefined;
+
+    if (isPdf) {
+      if (process.env.BLOB_READ_WRITE_TOKEN) {
+        try {
+          const { uploadPdfToBlob } = await import("@/lib/portfolio/blob");
+          blobUrl = await uploadPdfToBlob(file.name, buffer);
+          console.log("[Blob] PDF uploaded:", blobUrl);
+        } catch (err) {
+          blobError = err instanceof Error ? err.message : String(err);
+          console.warn("[Blob] PDF upload failed (non-fatal):", err);
+        }
+      } else {
+        blobError = "BLOB_READ_WRITE_TOKEN is not configured — file stored in ephemeral /tmp only";
+        console.warn("[Blob] Skipping PDF upload:", blobError);
       }
     }
 
@@ -68,7 +79,7 @@ export async function POST(request: NextRequest) {
     });
 
     const ragEnabled = !!process.env.PINECONE_API_KEY && !!process.env.OPENAI_API_KEY;
-    return Response.json({ id, chunkCount, ragEnabled, blobUrl });
+    return Response.json({ id, chunkCount, ragEnabled, blobUrl, blobError });
   } catch (err) {
     await unlink(filePath).catch(() => {});
     console.error("Document ingestion error:", err);

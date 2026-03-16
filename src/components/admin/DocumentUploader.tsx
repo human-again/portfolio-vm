@@ -22,6 +22,7 @@ export default function DocumentUploader({
   const [topic, setTopic] = useState<Topic>("general");
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [blobWarning, setBlobWarning] = useState<string | null>(null);
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -29,6 +30,7 @@ export default function DocumentUploader({
 
       setUploading(true);
       setError(null);
+      setBlobWarning(null);
 
       for (const file of acceptedFiles) {
         const formData = new FormData();
@@ -41,9 +43,14 @@ export default function DocumentUploader({
             body: formData,
           });
 
+          const data = await res.json();
+
           if (!res.ok) {
-            const data = await res.json();
             throw new Error(data.error || "Upload failed");
+          }
+
+          if (data.blobError) {
+            setBlobWarning(`Blob upload failed: ${data.blobError}`);
           }
         } catch (err) {
           setError(err instanceof Error ? err.message : "Upload failed");
@@ -116,6 +123,11 @@ export default function DocumentUploader({
 
       {error && (
         <p role="alert" className="text-sm text-red-500">{error}</p>
+      )}
+      {blobWarning && (
+        <p role="alert" className="text-sm text-yellow-600 bg-yellow-50 border border-yellow-200 rounded-lg px-3 py-2">
+          <span className="font-medium">Blob upload warning:</span> {blobWarning}
+        </p>
       )}
     </div>
   );
