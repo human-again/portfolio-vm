@@ -10,27 +10,31 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://varunmahajan.tech"),
   title: {
-    default: "Varun Mahajan — Lead Experience Engineer | AI Portfolio",
+    default: "Varun Mahajan — Lead Engineer · AI & Full-Stack · React, Next.js, LangGraph, Python",
     template: "%s | Varun Mahajan",
   },
   description:
-    "Varun Mahajan — Lead Experience Engineer with 14+ years in Next.js, React, TypeScript, and Node.js. Toronto-based. Specializing in AI-powered web applications.",
+    "Varun Mahajan — Lead Engineer with 15+ years building AI-powered full-stack platforms. Specializing in agentic AI systems (LangGraph, LangChain), React, Next.js, TypeScript, and Python. Based in Ontario, Canada.",
   keywords: [
     "Varun Mahajan",
-    "Lead Experience Engineer",
+    "Lead Engineer",
+    "Agentic AI",
+    "LangGraph",
+    "LangChain",
     "Next.js",
     "React",
     "TypeScript",
-    "Node.js",
+    "Python",
+    "Full-Stack Engineer",
     "AI Portfolio",
-    "Toronto",
-    "Frontend Engineer",
+    "Ontario",
+    "Canada",
   ],
   authors: [{ name: "Varun Mahajan", url: "https://varunmahajan.tech" }],
   openGraph: {
     type: "website",
     url: "https://varunmahajan.tech",
-    title: "Varun Mahajan — Lead Experience Engineer | AI Portfolio",
+    title: "Varun Mahajan — Lead Engineer · AI & Full-Stack · React, Next.js, LangGraph, Python",
     description:
       "Chat with my AI portfolio — ask about my projects, skills, and experience.",
     images: [
@@ -38,13 +42,13 @@ export const metadata: Metadata = {
         url: "/images/vm-profile.png",
         width: 1200,
         height: 630,
-        alt: "Varun Mahajan — Lead Experience Engineer",
+        alt: "Varun Mahajan — Lead Engineer · AI & Full-Stack",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Varun Mahajan — AI Portfolio",
+    title: "Varun Mahajan — Lead Engineer · AI & Full-Stack",
     description:
       "Chat with my AI portfolio — ask about my projects, skills, and experience.",
     images: ["/images/vm-profile.png"],
@@ -57,13 +61,13 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Varun Mahajan",
-  jobTitle: "Lead Experience Engineer",
+  jobTitle: "Lead Engineer",
   url: "https://varunmahajan.tech",
   image: "https://varunmahajan.tech/images/vm-profile.png",
   email: "mhjn.varun@gmail.com",
   address: { "@type": "PostalAddress", addressCountry: "CA", addressRegion: "Ontario" },
-  sameAs: ["https://github.com/human-again"],
-  knowsAbout: ["Next.js", "React", "TypeScript", "Node.js", "AI", "Kubernetes", "Docker"],
+  sameAs: ["https://github.com/human-again", "https://www.linkedin.com/in/varun-mhjn/"],
+  knowsAbout: ["Next.js", "React", "TypeScript", "Python", "LangGraph", "LangChain", "Node.js", "Agentic AI", "Kubernetes", "Docker"],
 };
 
 export default function RootLayout({

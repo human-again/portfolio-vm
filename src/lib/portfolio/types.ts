@@ -10,6 +10,8 @@ export const ProjectOverrideSchema = z.object({
   outcome: z.string().optional().default(""),
   role: z.string().optional().default(""),
   period: z.string().optional().default(""),
+  githubUrl: z.string().optional(),
+  liveUrl: z.string().optional(),
 });
 
 export const ExperienceOverrideSchema = z.object({

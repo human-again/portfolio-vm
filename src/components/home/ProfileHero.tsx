@@ -15,10 +15,10 @@ export default function ProfileHero() {
       animate={{ opacity: 1, y: 0 }}
       transition={prefersReduced ? { duration: 0 } : { duration: 0.5, ease: "easeOut" }}
     >
-      <p className="text-lg text-gray-500 font-normal mb-1">
+      <p className="text-2xl md:text-3xl font-bold text-foreground mb-1">
         {portfolio.profile.tagline}
       </p>
-      <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight mb-8">
+      <h1 className="text-xl md:text-2xl font-normal text-muted-foreground tracking-tight mb-8">
         {portfolio.profile.headline}
       </h1>
       <motion.div

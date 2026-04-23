@@ -13,6 +13,8 @@ export interface ProjectData {
   outcome: string;
   role: string;
   period: string;
+  githubUrl?: string;
+  liveUrl?: string;
 }
 
 export interface MergedPortfolioData {
@@ -120,6 +122,8 @@ function buildFromOverride(
       outcome: p.outcome ?? "",
       role: p.role ?? "",
       period: p.period ?? "",
+      githubUrl: p.githubUrl,
+      liveUrl: p.liveUrl,
     })),
     skills: {
       frontend: o.skills.frontend.length
@@ -165,12 +169,14 @@ function buildFromStatic(activeResumeUrl: string | null): MergedPortfolioData {
     },
     projects: portfolio.content.projectDetails.map((p) => ({
       name: p.name,
-      label: "Project",
+      label: p.label ?? "Project",
       description: p.description,
       technologies: p.technologies,
       outcome: p.outcome,
-      role: "",
-      period: "",
+      role: p.role ?? "",
+      period: p.period ?? "",
+      githubUrl: p.githubUrl,
+      liveUrl: p.liveUrl,
     })),
     skills: portfolio.skills,
     contact: portfolio.contact,
