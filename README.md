@@ -1,5 +1,11 @@
 # AI Portfolio Chat
 
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 A modern, AI-powered portfolio built with **Next.js 16 App Router**. Visitors can ask an LLM questions about your experience, skills, and projects — powered by portfolio context injected directly into the system prompt. No vector DB required for the base setup.
 
 ## Features
@@ -174,9 +180,16 @@ pnpm tsc --noEmit # Type check without emitting
 
 ## Contributing
 
-Contributions are welcome. Please open an issue first for significant changes.
+Contributions are welcome for bug fixes, documentation improvements, accessibility improvements, and focused enhancements that keep this project useful as an AI portfolio template.
 
-To report a security vulnerability, see [SECURITY.md](SECURITY.md).
+Before opening a pull request:
+
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) for setup, scope, and check expectations
+- Use the GitHub issue templates for bug reports and feature requests
+- Open an issue first for large UI redesigns, architecture changes, or provider rewrites
+- Follow the pull request template and include screenshots for visible UI changes
+
+To report a security vulnerability, do not open a public issue. See [SECURITY.md](SECURITY.md).
 
 ## License
 

@@ -1,0 +1,49 @@
+name: Feature request
+description: Suggest a focused improvement for the AI portfolio template.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature ideas are welcome when they keep the project focused on a professional AI portfolio experience.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Opportunity
+      description: What user need does this solve?
+      placeholder: Portfolio visitors need...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Describe the change you would like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches did you consider?
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: How large is this change likely to be?
+      options:
+        - Small docs or UI improvement
+        - Focused bug fix or behavior improvement
+        - Larger feature that needs discussion
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues before opening this request.
+          required: true
+        - label: This request keeps the app focused on an AI-powered portfolio template.
+          required: true
