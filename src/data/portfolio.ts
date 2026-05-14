@@ -99,6 +99,12 @@ export const portfolio = {
     resume: "Can you show me your resume or CV?",
   },
 
+  promptSuggestions: [
+    "What AI systems has Varun shipped?",
+    "Which projects show measurable business impact?",
+    "What makes Varun a strong lead engineer?",
+  ],
+
   // ── CONTENT (injected into LLM system prompt) ────────────────────────────
   // Replace every placeholder below with your real information.
   // This is what the AI uses to answer questions accurately.
