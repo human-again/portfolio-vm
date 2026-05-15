@@ -1,11 +1,11 @@
-import { createLLM } from "@/lib/llm/provider";
+import { createLLMAsync } from "@/lib/llm/provider";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { ChatGraphStateType } from "../state";
 
 export async function llmResponder(
   state: ChatGraphStateType
 ): Promise<Partial<ChatGraphStateType>> {
-  const llm = createLLM();
+  const llm = await createLLMAsync();
   const result = await llm.invoke([
     new SystemMessage(state.systemPrompt),
     new HumanMessage(state.query),
