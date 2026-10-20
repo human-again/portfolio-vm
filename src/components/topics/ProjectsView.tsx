@@ -36,11 +36,6 @@ export default function ProjectsView({ projects }: Props) {
       ? projects
       : projects.filter((p) => p.label === activeFilter);
 
-  // Reset to page 0 whenever the filter changes
-  useEffect(() => {
-    setStartIndex(0);
-  }, [activeFilter]);
-
   const canGoBack = startIndex > 0;
   const canGoForward = startIndex + visibleCount < filtered.length;
 
@@ -60,7 +55,10 @@ export default function ProjectsView({ projects }: Props) {
           {["All", ...labels].map((label) => (
             <button
               key={label}
-              onClick={() => setActiveFilter(label)}
+              onClick={() => {
+                setActiveFilter(label);
+                setStartIndex(0);
+              }}
               className={`px-3 py-1 text-xs font-medium rounded-full border transition-all ${
                 activeFilter === label
                   ? "bg-foreground text-background border-foreground"

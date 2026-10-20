@@ -84,7 +84,7 @@ LLM_MODEL=llama3.2
 **For cloud LLM providers** (pick one):
 ```env
 LLM_PROVIDER=groq
-LLM_MODEL=llama-3.3-70b-versatile
+LLM_MODEL=openai/gpt-oss-120b
 GROQ_API_KEY=your_key          # free tier — console.groq.com
 
 # or:
@@ -170,7 +170,7 @@ pnpm tsc --noEmit # Type check without emitting
 3. Add all required environment variables in the Vercel dashboard
 4. Deploy — Vercel auto-detects Next.js
 
-> **Production tip:** Set `LLM_PROVIDER=groq` and `LLM_MODEL=llama-3.3-70b-versatile` in Vercel env vars — Groq's free tier handles ~14K requests/day with a 128K context window.
+> **Production tip:** Set `LLM_PROVIDER=groq` and `LLM_MODEL=openai/gpt-oss-120b` in Vercel env vars. The application automatically migrates retired Groq model IDs saved in admin settings to supported replacements.
 
 ## Contributing
 

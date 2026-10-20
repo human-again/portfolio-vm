@@ -1,13 +1,34 @@
 import type { AppConfig } from "./types";
+import { getDefaultModel, migrateDeprecatedModel } from "@/lib/llm/models";
 
 const CONFIG_KEY = "app-config";
 
+function getDefaultProvider(): string {
+  if (process.env.LLM_PROVIDER) return process.env.LLM_PROVIDER;
+  if (process.env.GROQ_API_KEY) return "groq";
+  if (process.env.OPENAI_API_KEY) return "openai";
+  if (process.env.ANTHROPIC_API_KEY) return "anthropic";
+  return "ollama";
+}
+
+const defaultProvider = getDefaultProvider();
+
 const DEFAULT_CONFIG: AppConfig = {
-  llmProvider: process.env.LLM_PROVIDER || "ollama",
-  llmModel: process.env.LLM_MODEL || "llama3.2",
+  llmProvider: defaultProvider,
+  llmModel: migrateDeprecatedModel(
+    defaultProvider,
+    process.env.LLM_MODEL || getDefaultModel(defaultProvider),
+  ),
   llmTemperature: Number(process.env.LLM_TEMPERATURE) || 0.7,
   llmMaxTokens: Number(process.env.LLM_MAX_TOKENS) || 1024,
 };
+
+function normalizeConfig(config: AppConfig): AppConfig {
+  return {
+    ...config,
+    llmModel: migrateDeprecatedModel(config.llmProvider, config.llmModel),
+  };
+}
 
 function isKvConfigured(): boolean {
   return !!(
@@ -36,7 +57,10 @@ export async function getConfig(): Promise<AppConfig> {
       const redis = await getRedis();
       const stored = await redis.get(CONFIG_KEY);
       if (stored) {
-        return { ...DEFAULT_CONFIG, ...(stored as Partial<AppConfig>) };
+        return normalizeConfig({
+          ...DEFAULT_CONFIG,
+          ...(stored as Partial<AppConfig>),
+        });
       }
     } catch (err) {
       console.warn("[Config] KV read failed, using defaults:", err);
@@ -44,7 +68,7 @@ export async function getConfig(): Promise<AppConfig> {
   }
 
   // Fallback to env vars and defaults
-  return DEFAULT_CONFIG;
+  return normalizeConfig(DEFAULT_CONFIG);
 }
 
 export async function updateConfig(updates: Partial<AppConfig>): Promise<AppConfig> {
@@ -55,7 +79,7 @@ export async function updateConfig(updates: Partial<AppConfig>): Promise<AppConf
     ...(updates.llmModel && { llmModel: updates.llmModel.trim() }),
     ...(updates.llmProvider && { llmProvider: updates.llmProvider.trim() }),
   };
-  const updated = { ...current, ...sanitized };
+  const updated = normalizeConfig({ ...current, ...sanitized });
 
   // Try to store in KV if configured
   if (isKvConfigured()) {

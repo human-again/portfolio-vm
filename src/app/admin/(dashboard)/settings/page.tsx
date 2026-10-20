@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Save, Loader2 } from "lucide-react";
 import type { AppConfig } from "@/lib/db/types";
+import { MODEL_SUGGESTIONS } from "@/lib/llm/models";
 
 const PROVIDERS = [
   { value: "ollama", label: "Ollama (Local)" },
@@ -10,13 +11,6 @@ const PROVIDERS = [
   { value: "anthropic", label: "Anthropic" },
   { value: "groq", label: "Groq" },
 ];
-
-const MODEL_SUGGESTIONS: Record<string, string[]> = {
-  ollama: ["llama3.2", "llama3.1", "mistral", "codellama"],
-  openai: ["gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo"],
-  anthropic: ["claude-sonnet-4-20250514", "claude-haiku-4-20250414"],
-  groq: ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it"],
-};
 
 export default function SettingsPage() {
   const [config, setConfig] = useState<AppConfig | null>(null);
@@ -57,7 +51,8 @@ export default function SettingsPage() {
     return <p role="status" className="text-muted-foreground">Loading settings...</p>;
   }
 
-  const suggestions = MODEL_SUGGESTIONS[config.llmProvider] || [];
+  const suggestions =
+    MODEL_SUGGESTIONS[config.llmProvider as keyof typeof MODEL_SUGGESTIONS] || [];
 
   return (
     <div>
@@ -69,13 +64,14 @@ export default function SettingsPage() {
           <select
             id="llm-provider"
             value={config.llmProvider}
-            onChange={(e) =>
+            onChange={(e) => {
+              const provider = e.target.value as keyof typeof MODEL_SUGGESTIONS;
               setConfig({
                 ...config,
-                llmProvider: e.target.value,
-                llmModel: MODEL_SUGGESTIONS[e.target.value]?.[0] || "",
-              })
-            }
+                llmProvider: provider,
+                llmModel: MODEL_SUGGESTIONS[provider]?.[0] || "",
+              });
+            }}
             className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background"
           >
             {PROVIDERS.map((p) => (

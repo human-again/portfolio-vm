@@ -24,7 +24,6 @@ async function getRedis() {
 }
 
 const KV_KEY = "portfolio-override";
-const BLOB_URL_KEY = "resume-blob-url";
 
 // ── Portfolio override CRUD ─────────────────────────────────────────────────
 
